@@ -1,0 +1,34 @@
+---
+title: "Introducton to RcollectlWorkflow"
+author:
+- name: Yubo Cheng
+  affiliation: Roswell Park Comprehensive Cancer Center, Buffalo, NY, US
+output:
+  BiocStyle::html_document
+vignette: >
+  %\VignetteIndexEntry{Introduction to RcollectlWorkflow}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Rcollectl Workflow
+
+The vignette in this package follows single-cell analysis workflow (workflow chapters of the “Orchestrating Single-Cell Analysis with Bioconductor” book) to analyze loom file from HCA dataset and tracks computing resources usage with R package `Rcollectl`.
+
+Suggested computing resources: 60 GB memory, 10 CPU cores when parameter knitr_eval set to TRUE to knit the vignette. FileId is the file id of h5ad file to analyze. Sample should be one of column names.
+
+Build docker image with files in inst/docker:
+```{bash, eval=FALSE}
+docker build -t bioconductor_docker_workflow_hca_loom:devel .
+```
+
+Knit vignette with built docker image and generate output at LOCAL_DIRECTORY:
+```{bash, eval=FALSE}
+docker run -it -v LOCAL_DIRECTORY:/output --rm \
+    --env knitr_eval=TRUE \
+    --env fileId="e9e0243b-ed2b-4b6d-b049-7c7be43dd5b9" \
+    --env sample="Disease.group" \
+    --env core=10 \
+    --env mem_gb=60 \
+    bioconductor_docker_workflow_hca_loom:devel
+```

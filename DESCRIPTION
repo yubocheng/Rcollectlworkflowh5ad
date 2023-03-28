@@ -1,0 +1,41 @@
+Package: Rcollectlworkflowh5ad
+Type: Package
+Title: Single-Cell Analysis Workflow
+Version: 0.1.0
+Authors@R: c(
+    person(
+        "Yubo", "Cheng", role = c("aut", "cre"),
+        email = "yubo.cheng@roswellpark.org"
+    ))
+Description: Provide a single-cell analysis Workflow as well as computing resources usage tracking with package Rcollectl.
+License: Artistic-2.0
+Encoding: UTF-8
+LazyData: true
+VignetteBuilder: knitr
+Depends:
+    R (>= 4.2.0)
+Suggests:
+    knitr,
+    BiocStyle,
+    rmarkdown,
+    ggplot2,
+    dplyr,
+    pheatmap,
+    sessioninfo,
+    devtools,
+    cellxgenedp,
+    zellkonverter,
+    SingleCellExperiment,
+    EnsDb.Hsapiens.v86,
+    scater,
+    BiocParallel,
+    scran,
+    batchelor,
+    BiocNeighbors,
+    uwot,
+    bluster,
+    celldex,
+    SingleR,
+    knitcitations
+Remotes:
+    vjcitn/Rcollectl
