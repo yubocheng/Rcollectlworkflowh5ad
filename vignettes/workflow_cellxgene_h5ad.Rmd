@@ -4,8 +4,8 @@ output:
   html_document: default
 params:
   knitr_eval: FALSE
-  fileId: "e9e0243b-ed2b-4b6d-b049-7c7be43dd5b9"
-  sample: "Disease.group"
+  fileId: "e2874fd9-af11-4adf-a47a-f380b7606434"
+  sample: "Name"
   core: 10
   mem_gb: 60
 vignette: >
@@ -27,16 +27,14 @@ File id of h5ad file to analyze could be obtained using package `cellxgenedp`, a
 ```{r, echo = TRUE, message=FALSE}
 library(cellxgenedp)
 library(dplyr)
-datasets(db()) |>
-  filter(
-    name == "Immunophenotyping of COVID-19 and influenza highlights the role of type I interferons in development of severe COVID-19"
-  )
-
-files(db()) |>
-  filter(
-    dataset_id == "0168ce6e-01a1-49e9-992e-b160c81b35a1",
-    filetype == "H5AD"
-  )
+left_join(
+  datasets(db()) |> select(dataset_id, collection_id, donor_id, name, cell_count, cell_type),
+  files(db()),
+  by = "dataset_id"
+) |> filter(
+  name == "Direct Exposure to SARS-CoV-2 and Cigarette Smoke Increases Infection Severity and Alters the Stem Cell-Derived Airway Repair Response",
+  filetype == "H5AD"
+)
 ```
 
 ```{r, echo = TRUE, message=FALSE, eval=TRUE}
@@ -81,7 +79,7 @@ library(dplyr)
 
 ## download h5ad file
 h5ad_file <- files(db()) |>
-  filter(file_id == "e9e0243b-ed2b-4b6d-b049-7c7be43dd5b9") |> files_download(dry.run = FALSE)
+  filter(file_id == params$fileId) |> files_download(dry.run = FALSE)
 
 ## start Rcollectl
 id <- cl_start(basename(h5ad_file))
@@ -95,11 +93,12 @@ cl_timestamp(id, "data preparation")
 
 ## import h5ad file
 library(zellkonverter)
+library(HDF5Array)
 sce <- readH5AD(h5ad_file, use_hdf5 = TRUE)
 
 ## pre-process data
 library(SingleCellExperiment)
-sce$sample <- colData(sce)$Name
+sce$sample <- colData(sce)[, sample]
 
 library(EnsDb.Hsapiens.v86)
 rowData(sce)$Chr <- mapIds(EnsDb.Hsapiens.v86, keys=rownames(sce), column="SEQNAME", keytype="GENEID")
@@ -242,33 +241,10 @@ lfcs <- getMarkerEffects(best)
 pheatmap(lfcs, breaks=seq(-5, 5, length.out=101))
 ```
 
-## Step cell type classification
-
-```{r cell_type_classification, message=FALSE}
-cl_timestamp(id, "cell type classification")
-
-se.aggregated <- sumCountsAcrossCells(sce, id=colLabels(sce), BPPARAM=bpp)
-
-library(celldex)
-hpc <- HumanPrimaryCellAtlasData()
-
-library(SingleR)
-anno.single <- SingleR(se.aggregated, ref = hpc, labels = hpc$label.main, assay.type.test="sum")
-saveRDS(anno.single, file = "cell_type_classification.rds")
-anno.single
-```
-
 ## Stop `Rcollectl`
 
 ```{r cl_stop}
 cl_stop(id)
-```
-
-## Plot collectl result
-
-```{r plot_all}
-path <- cl_result_path(id)
-plot_usage(cl_parse(path))
 ```
 
 ## Plot collectl result with time stamp

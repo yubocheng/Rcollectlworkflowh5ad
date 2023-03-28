@@ -1,9 +1,9 @@
 # Docker inheritance
 FROM bioconductor/bioconductor_docker:devel
 ENV knitr_eval FALSE
-ENV fileId "e9e0243b-ed2b-4b6d-b049-7c7be43dd5b9"
-ENV sample "Disease.group"
-ENV core 10
+ENV fileId "e2874fd9-af11-4adf-a47a-f380b7606434"
+ENV sample "Name"
+ENV core 8
 ENV mem_gb 60
 
 # download and install collectl

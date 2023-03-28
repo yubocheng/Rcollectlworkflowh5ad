@@ -1,7 +1,7 @@
 {
     "RcollectlWorkflow.knitr_eval": "TRUE",
-    "RcollectlWorkflow.fileId": "e9e0243b-ed2b-4b6d-b049-7c7be43dd5b9",
-    "RcollectlWorkflow.sample": "Disease.group",
+    "RcollectlWorkflow.fileId": "e2874fd9-af11-4adf-a47a-f380b7606434",
+    "RcollectlWorkflow.sample": "Name",
     "RcollectlWorkflow.core": 10,
     "RcollectlWorkflow.mem_gb": 60
 }
