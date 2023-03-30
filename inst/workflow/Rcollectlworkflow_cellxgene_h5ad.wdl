@@ -16,7 +16,6 @@ task Rcollectl_cellxgene_h5ad {
     output {
         File workflow_cellxgene_h5ad_html = "workflow_cellxgene_h5ad.html"
         File h5ad_rds = "sce_h5ad.rds"
-        File cell_type_classification_rds = "cell_type_classification.rds"
         Array[File] Rcollectl_result = glob("*.tab.gz")
         Array[File] Rcollectl_timestamp = glob("*.timestamp.txt")
     }
@@ -53,7 +52,6 @@ workflow RcollectlWorkflow {
     output {
     	File workflow_cellxgene_h5ad_html = Rcollectl_cellxgene_h5ad.workflow_cellxgene_h5ad_html
     	File h5ad_rds = Rcollectl_cellxgene_h5ad.h5ad_rds
-    	File cell_type_classification_rds = Rcollectl_cellxgene_h5ad.cell_type_classification_rds
     	Array[File] Rcollectl_result = Rcollectl_cellxgene_h5ad.Rcollectl_result
     	Array[File] Rcollectl_timestamp = Rcollectl_cellxgene_h5ad.Rcollectl_timestamp
     }
