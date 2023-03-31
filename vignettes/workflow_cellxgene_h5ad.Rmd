@@ -94,7 +94,7 @@ cl_timestamp(id, "data preparation")
 ## import h5ad file
 library(zellkonverter)
 library(HDF5Array)
-sce <- readH5AD(h5ad_file, use_hdf5 = TRUE)
+sce <- readH5AD(h5ad_file)
 
 ## pre-process data
 library(SingleCellExperiment)
