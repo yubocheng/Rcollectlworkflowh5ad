@@ -28,6 +28,7 @@ docker run -it -v LOCAL_DIRECTORY:/output --rm \
     --env knitr_eval=TRUE \
     --env fileId="e2874fd9-af11-4adf-a47a-f380b7606434" \
     --env sample="Name" \
+    --env dgCMatrix=TRUE \
     --env core=10 \
     --env mem_gb=60 \
     bioconductor_docker_workflow_cellxgene_h5ad:devel

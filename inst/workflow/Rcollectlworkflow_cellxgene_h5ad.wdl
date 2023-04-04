@@ -5,12 +5,13 @@ task Rcollectl_cellxgene_h5ad {
         Boolean knitr_eval
         String fileId
         String sample
+        Boolean dgCMatrix
         Int core = 10
         Int mem_gb = 60
     }
 
     command {
-        /tmp/run_Rcollectl.R ${knitr_eval} ${fileId} ${sample} ${core} ${mem_gb}
+        /tmp/run_Rcollectl.R ${knitr_eval} ${fileId} ${sample} ${dgCMatrix} ${core} ${mem_gb}
     }
 
     output {
@@ -36,6 +37,7 @@ workflow RcollectlWorkflow {
         Boolean knitr_eval
         String fileId
         String sample
+        Boolean dgCMatrix
         Int core = 10
         Int mem_gb = 60
     }
@@ -45,6 +47,7 @@ workflow RcollectlWorkflow {
         knitr_eval = knitr_eval, 
         fileId = fileId, 
         sample = sample,
+        dgCMatrix = dgCMatrix,
         core = core,
         mem_gb = mem_gb
     }

@@ -3,6 +3,7 @@ FROM bioconductor/bioconductor_docker:devel
 ENV knitr_eval FALSE
 ENV fileId "e2874fd9-af11-4adf-a47a-f380b7606434"
 ENV sample "Name"
+ENV dgCMatrix TRUE
 ENV core 10
 ENV mem_gb 60
 
@@ -26,4 +27,4 @@ RUN /tmp/install_Rcollectl.R
 
 WORKDIR /output
 
-CMD /tmp/run_Rcollectl.R $knitr_eval $fileId $sample $core $mem_gb
+CMD /tmp/run_Rcollectl.R $knitr_eval $fileId $sample $dgCMatrix $core $mem_gb

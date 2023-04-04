@@ -6,6 +6,7 @@ params:
   knitr_eval: FALSE
   fileId: "e2874fd9-af11-4adf-a47a-f380b7606434"
   sample: "Name"
+  dgCMatrix: TRUE
   core: 10
   mem_gb: 60
 vignette: >
@@ -28,8 +29,8 @@ File id of h5ad file to analyze could be obtained using package `cellxgenedp`, a
 library(cellxgenedp)
 library(dplyr)
 left_join(
-  datasets(db()) |> select(dataset_id, collection_id, donor_id, name, cell_count, cell_type),
-  files(db()),
+  datasets(db()) |> select(dataset_id, collection_id, donor_id, name, cell_count),
+  files(db()) |> select(dataset_id, file_id, filetype),
   by = "dataset_id"
 ) |> filter(
   name == "Direct Exposure to SARS-CoV-2 and Cigarette Smoke Increases Infection Severity and Alters the Stem Cell-Derived Airway Repair Response",
@@ -45,6 +46,12 @@ Column to analyze needs to be specified from colData of the dataset.
 
 ```{r, echo = TRUE, message=FALSE, eval=TRUE}
 sample <- params$sample
+```
+
+When importing h5ad file to SingleCellExperiment object, store assay as dgCMatrix or DelayedMatrix.
+
+```{r, echo = TRUE, message=FALSE, eval=TRUE}
+dgCMatrix <- params$dgCMatrix
 ```
 
 ```{r, echo = TRUE, message=FALSE, eval=TRUE}
@@ -94,7 +101,11 @@ cl_timestamp(id, "data preparation")
 ## import h5ad file
 library(zellkonverter)
 library(HDF5Array)
-sce <- readH5AD(h5ad_file)
+if (dgCMatrix == TRUE) {
+  sce <- readH5AD(h5ad_file, reader = "R")
+} else {
+  sce <- readH5AD(h5ad_file, use_hdf5 = TRUE, reader = "R")
+}
 
 ## pre-process data
 library(SingleCellExperiment)
