@@ -112,7 +112,9 @@ library(SingleCellExperiment)
 sce$sample <- colData(sce)[, sample]
 
 library(EnsDb.Hsapiens.v86)
-rowData(sce)$Chr <- mapIds(EnsDb.Hsapiens.v86, keys=rownames(sce), column="SEQNAME", keytype="GENEID")
+rowData(sce)$Chr <- mapIds(EnsDb.Hsapiens.v86, keys=as.character(rowData(sce)$feature_name), column="SEQNAME", keytype="SYMBOL")
+
+rownames(sce) <- as.character(rowData(sce)$feature_name)
 
 names(assays(sce)) <- "counts"
 
