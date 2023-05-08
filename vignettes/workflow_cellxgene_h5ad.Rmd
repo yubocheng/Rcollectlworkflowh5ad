@@ -116,6 +116,9 @@ rowData(sce)$Chr <- mapIds(EnsDb.Hsapiens.v86, keys=rownames(sce), column="SEQNA
 
 names(assays(sce)) <- "counts"
 
+## set auto block size 
+setAutoBlockSize(size=mem_gb*1e+9 / (core + 1))
+
 saveRDS(sce, file = "sce_h5ad.rds")
 ```
 
