@@ -59,6 +59,10 @@ core <- params$core
 ```
 
 ```{r, echo = TRUE, message=FALSE, eval=TRUE}
+mem_gb <- params$mem_gb
+```
+
+```{r, echo = TRUE, message=FALSE, eval=TRUE}
 ## file id
 fileId
 
