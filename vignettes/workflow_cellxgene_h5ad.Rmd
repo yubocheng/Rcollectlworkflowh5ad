@@ -98,7 +98,7 @@ id <- cl_start(basename(h5ad_file))
 
 ## Step data preparation 
 
-```{r data_preparation, echo = TRUE, message=FALSE}
+```{r data_preparation, echo = TRUE, message=FALSE, warning=FALSE}
 # record start time of each step
 cl_timestamp(id, "data preparation")
 
@@ -121,7 +121,8 @@ rowData(sce)$Chr <- mapIds(EnsDb.Hsapiens.v86, keys=rownames(sce), column="SEQNA
 names(assays(sce)) <- "counts"
 
 ## set auto block size 
-setAutoBlockSize(size=mem_gb*1e+9 / (core + 1))
+library(DelayedArray)
+setAutoBlockSize(size=min(.Machine$integer.max, mem_gb*1e+9))
 
 saveRDS(sce, file = "sce_h5ad.rds")
 ```
