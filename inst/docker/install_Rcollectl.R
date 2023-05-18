@@ -3,7 +3,7 @@
 # Install required packages
 BiocManager::install(c("ggplot2", "dplyr", "pheatmap", "sessioninfo", "devtools", "GenomicFeatures", "cellxgenedp", "HDF5Array", "SingleCellExperiment", "EnsDb.Hsapiens.v86", "scater",  "BiocParallel", "scran", "batchelor", "BiocNeighbors", "uwot", "bluster", "celldex", "SingleR", "rmarkdown", "BiocStyle"))
 
-devtools::install_github("davismcc/scater")
+devtools::install_github("alanocallaghan/scater")
 devtools::install_github("MarioniLab/scran")
 
 # Install Rcollectl
