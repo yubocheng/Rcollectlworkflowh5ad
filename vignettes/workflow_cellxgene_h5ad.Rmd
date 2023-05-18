@@ -134,6 +134,7 @@ cl_timestamp(id, "quality control")
 
 library(BiocParallel)
 library(scater)
+library(scuttle)
 
 bpp <- MulticoreParam(as.integer(core))
 
