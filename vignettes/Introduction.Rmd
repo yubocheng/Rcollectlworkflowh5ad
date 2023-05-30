@@ -1,5 +1,5 @@
 ---
-title: "Introducton to RcollectlWorkflow"
+title: "Introducton to RcollectlWorkflowh5ad"
 output:
   BiocStyle::html_document
 vignette: >
