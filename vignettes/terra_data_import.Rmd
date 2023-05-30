@@ -1,0 +1,96 @@
+---
+title: "Data import from cellxgene"
+output: html_document
+vignette: >
+  %\VignetteIndexEntry{Data import from cellxgene}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8} 
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+The following codes import data of h5ad file(s) to analyze with workflow `Rcollectlworkflow` to table "file".
+
+## Install packages
+```{r, message=FALSE, warning=FALSE}
+BiocManager::install("cellxgenedp")
+BiocManager::install("Bioconductor/AnVIL")
+BiocManager::install("zellkonverter")
+BiocManager::install("HDF5Array")
+BiocManager::install("yubocheng/Rcollectlworkflowh5ad")
+```
+
+## Get manifests
+
+Variable filters (HCA filter object) need to be provided to identify loom file(s) for analysis, then manifests of the file(s) can be retrieved.
+
+```{r, message=FALSE}
+library(cellxgenedp)
+library(dplyr)
+library(AnVIL)
+library(Rcollectlworkflowh5ad)
+
+manifest_tibble <- get_manifest_tibble() |>
+  filter(
+  name == "Immunophenotyping of COVID-19 and influenza highlights the role of type I interferons in development of severe COVID-19",
+  filetype == "H5AD"
+)
+
+manifest_tibble
+```
+
+## Decide sample to analyze
+
+To explore the h5ad file, import it to `R` as SingleCellExperiment object, then sample to analyze should come from `names(colData(sce))`.
+
+```{r, eval=FALSE, , message=FALSE, warning=FALSE}
+library(cellxgenedp)
+library(dplyr)
+h5ad_file <- files(db()) |> filter(file_id == manifest_tibble$file_id) |> files_download(dry.run = FALSE)
+
+library(zellkonverter)
+library(HDF5Array)
+library(SingleCellExperiment)
+sce <- readH5AD(h5ad_file, use_hdf5 = TRUE, reader = "R")
+names(colData(sce))
+```
+
+## Import manifest file date to table "file"
+
+Six variables: manifest_tibble, id, sample, dgCMatrix, core, mem_gb are needed to import file data to table "file". Id is unique id of file table. dgCMatrix is logical scalar to indicate whether assay should be loaded as dgCMatrix (TRUE, default value) or HDF5-based matrices from the HDF5Array package (FALSE), and value TRUE is suggested when h5ad file is larger than 500 MB. Core is number of CPU cores required for the workflow to run, and default value is 10. Mem_gb is memory required for the workflow, and default value is 60 GB.
+
+```{r, eval=FALSE}
+sample = "Disease.group"
+id = sprintf("%04d", dim(avtable("file"))[1] + 1)
+update_file_avtable(manifest_tibble, id, sample, dgCMatrix, core, mem_gb)
+avtable("file")
+```
+
+## Run workflow
+
+To run `Rcollectlworkflowh5ad`, click Rcollectlworkflowh5ad under WORKFLOWS tab, select file as "Step 1 Select root entity type:". For INPUTS, select attribute this.file_id for variable fileId, attribute this.knitr_eval for variable knitr_eval, attribute this.dgCMatrix for variable dgCMatrix, attribute this.sample for variable sample. When using attribute this.mem_gb and this.core or leave as blank for variables mem_gb and core, default values will be applied. For OUTPUTS, attributes could be filled in by "Use defaults". After saving the workflow, it could be run by selecting the h5ad file to analyze for "Step 2 SELECT DATA".
+
+## Pull workflow output
+
+Workflow outputs could be pulled and viewed with `R`.
+
+```{r, message=FALSE, eval=FALSE}
+avworkspace("bioconductor-rpci-yubo/Rcollectlworkflowh5ad")
+avworkflow_jobs()
+fls <- avworkflow_files()
+fls
+gsutil_cp(fls |> filter(file == "sce_h5ad.rds") |> pull("path"), ".")
+dir()
+readRDS("sce_h5ad.rds")
+```
+
+## `R` session information
+
+```{r session_info, echo=FALSE}
+## Session info
+library("sessioninfo")
+options(width = 120)
+session_info()
+```

@@ -130,7 +130,7 @@ saveRDS(sce, file = "sce_h5ad.rds")
 
 ```{r setAutoBlockSize, echo = TRUE}
 library(DelayedArray)
-setAutoBlockSize(size=mem_gb*1e+9)
+setAutoBlockSize(size=min(.Machine$integer.max, mem_gb*1e+9))
 ```
 
 ## Step quality control

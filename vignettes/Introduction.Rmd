@@ -1,12 +1,9 @@
 ---
 title: "Introducton to RcollectlWorkflow"
-author:
-- name: Yubo Cheng
-  affiliation: Roswell Park Comprehensive Cancer Center, Buffalo, NY, US
 output:
   BiocStyle::html_document
 vignette: >
-  %\VignetteIndexEntry{Introduction to RcollectlWorkflow}
+  %\VignetteIndexEntry{Introduction to RcollectlWorkflowh5ad}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
