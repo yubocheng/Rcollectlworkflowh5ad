@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 The following codes import data of h5ad file(s) to analyze with workflow `Rcollectlworkflow` to table "file".
 
 ## Install packages
-```{r, message=FALSE, warning=FALSE}
+```{r, eval=FALSE}
 BiocManager::install("cellxgenedp")
 BiocManager::install("Bioconductor/AnVIL")
 BiocManager::install("zellkonverter")
@@ -24,7 +24,7 @@ BiocManager::install("yubocheng/Rcollectlworkflowh5ad")
 
 ## Get manifests
 
-Variable filters (HCA filter object) need to be provided to identify loom file(s) for analysis, then manifests of the file(s) can be retrieved.
+Filter need to be provided to identify h5ad file(s) for analysis, then manifests of the file(s) can be retrieved.
 
 ```{r, message=FALSE}
 library(cellxgenedp)
@@ -45,7 +45,7 @@ manifest_tibble
 
 To explore the h5ad file, import it to `R` as SingleCellExperiment object, then sample to analyze should come from `names(colData(sce))`.
 
-```{r, eval=FALSE, , message=FALSE, warning=FALSE}
+```{r, message=FALSE, warning=FALSE}
 library(cellxgenedp)
 library(dplyr)
 h5ad_file <- files(db()) |> filter(file_id == manifest_tibble$file_id) |> files_download(dry.run = FALSE)
