@@ -4,7 +4,7 @@ ENV knitr_eval FALSE
 ENV fileId "e2874fd9-af11-4adf-a47a-f380b7606434"
 ENV sample "Name"
 ENV dgCMatrix TRUE
-ENV core 10
+ENV core 3
 ENV mem_gb 60
 
 # download and install collectl

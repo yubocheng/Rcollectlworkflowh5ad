@@ -6,7 +6,7 @@ task Rcollectl_cellxgene_h5ad {
         String fileId
         String sample
         Boolean dgCMatrix
-        Int core = 10
+        Int core = 3
         Int mem_gb = 60
     }
 
@@ -16,7 +16,6 @@ task Rcollectl_cellxgene_h5ad {
 
     output {
         File workflow_cellxgene_h5ad_html = "workflow_cellxgene_h5ad.html"
-        File h5ad_rds = "sce_h5ad.rds"
         Array[File] Rcollectl_result = glob("*.tab.gz")
         Array[File] Rcollectl_timestamp = glob("*.timestamp.txt")
     }
@@ -38,7 +37,7 @@ workflow RcollectlWorkflow {
         String fileId
         String sample
         Boolean dgCMatrix
-        Int core = 10
+        Int core = 3
         Int mem_gb = 60
     }
 
@@ -54,7 +53,6 @@ workflow RcollectlWorkflow {
     
     output {
     	File workflow_cellxgene_h5ad_html = Rcollectl_cellxgene_h5ad.workflow_cellxgene_h5ad_html
-    	File h5ad_rds = Rcollectl_cellxgene_h5ad.h5ad_rds
     	Array[File] Rcollectl_result = Rcollectl_cellxgene_h5ad.Rcollectl_result
     	Array[File] Rcollectl_timestamp = Rcollectl_cellxgene_h5ad.Rcollectl_timestamp
     }

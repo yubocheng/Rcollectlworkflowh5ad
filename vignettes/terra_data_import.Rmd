@@ -59,7 +59,7 @@ names(colData(sce))
 
 ## Import manifest file date to table "file"
 
-Six variables: manifest_tibble, id, sample, dgCMatrix, core, mem_gb are needed to import file data to table "file". Id is unique id of file table. dgCMatrix is logical scalar to indicate whether assay should be loaded as dgCMatrix (TRUE, default value) or HDF5-based matrices from the HDF5Array package (FALSE), and value TRUE is suggested when h5ad file is larger than 500 MB. Core is number of CPU cores required for the workflow to run, and default value is 10. Mem_gb is memory required for the workflow, and default value is 60 GB.
+Six variables: manifest_tibble, id, sample, dgCMatrix, core, mem_gb are needed to import file data to table "file". Id is unique id of file table. dgCMatrix is logical scalar to indicate whether assay should be loaded as dgCMatrix (TRUE, default value) or HDF5-based matrices from the HDF5Array package (FALSE), and value TRUE is suggested when h5ad file is larger than 500 MB. Core is number of CPU cores required for the workflow to run, and default value is 3. Mem_gb is memory required for the workflow, and default value is 60 GB.
 
 ```{r, eval=FALSE}
 sample = "Disease.group"
@@ -81,9 +81,6 @@ avworkspace("bioconductor-rpci-yubo/Rcollectlworkflowh5ad")
 avworkflow_jobs()
 fls <- avworkflow_files()
 fls
-gsutil_cp(fls |> filter(file == "sce_h5ad.rds") |> pull("path"), ".")
-dir()
-readRDS("sce_h5ad.rds")
 ```
 
 ## `R` session information

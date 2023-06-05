@@ -7,7 +7,7 @@ params:
   fileId: "e2874fd9-af11-4adf-a47a-f380b7606434"
   sample: "Name"
   dgCMatrix: TRUE
-  core: 10
+  core: 3
   mem_gb: 60
 vignette: >
   %\VignetteIndexEntry{Single-Cell Analysis Workflow of cellxgene h5ad File}
@@ -122,8 +122,6 @@ library(EnsDb.Hsapiens.v86)
 rowData(sce)$Chr <- mapIds(EnsDb.Hsapiens.v86, keys=rownames(sce), column="SEQNAME", keytype="GENEID")
 
 names(assays(sce)) <- "counts"
-
-saveRDS(sce, file = "sce_h5ad.rds")
 ```
 
 ## set auto block size
