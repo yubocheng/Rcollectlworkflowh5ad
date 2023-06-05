@@ -192,7 +192,7 @@ for (i in colnames(blocked.stats)) {
 
 ## Step data integration
 
-```{r data_integration, message=FALSE}
+```{r data_integration, message=FALSE, warning=FALSE}
 # This step takes longer time
 cl_timestamp(id, "data integration")
 
