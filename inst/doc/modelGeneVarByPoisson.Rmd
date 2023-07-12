@@ -1,0 +1,148 @@
+---
+title: "DelayedArray and modelGeneVarByPoisson"
+output:
+  html_document: default
+params:
+  knitr_eval: FALSE
+  fileId: "e2874fd9-af11-4adf-a47a-f380b7606434"
+  sample: "Name"
+  mem_gb: 120
+vignette: >
+  %\VignetteIndexEntry{DelayedArray and modelGeneVarByPoisson}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8} 
+---
+
+```{r setup}
+knitr::opts_chunk$set(echo = TRUE, eval = params$knitr_eval)
+```
+
+## Set up parameters
+
+```{r, echo = TRUE, message=FALSE, eval=TRUE}
+mem_gb <- params$mem_gb
+```
+
+```{r, echo = TRUE, message=FALSE, eval=TRUE}
+fileId <- params$fileId
+```
+
+Column to analyze needs to be specified from colData of the dataset.
+
+```{r, echo = TRUE, message=FALSE, eval=TRUE}
+sample <- params$sample
+```
+
+```{r, echo = TRUE, message=FALSE, eval=TRUE}
+## file id
+fileId
+
+## column selected for analysis
+sample
+
+## memory 
+sprintf("%d GB", params$mem_gb) 
+```
+
+## Download h5ad file
+
+```{r file_download, echo = TRUE, message=FALSE}
+library(Rcollectl)
+library(cellxgenedp)
+library(dplyr)
+
+## download h5ad file
+h5ad_file <- files(db()) |>
+  filter(file_id == fileId) |> files_download(dry.run = FALSE)
+```
+
+## Step data preparation 
+
+```{r data_preparation, echo = TRUE, message=FALSE, warning=FALSE}
+## import h5ad file
+library(zellkonverter)
+library(HDF5Array)
+sce <- readH5AD(h5ad_file, use_hdf5 = TRUE, reader = "R")
+
+## pre-process data
+library(SingleCellExperiment)
+sce$sample <- colData(sce)[, sample]
+
+library(EnsDb.Hsapiens.v86)
+rowData(sce)$Chr <- mapIds(EnsDb.Hsapiens.v86, keys=rownames(sce), column="SEQNAME", keytype="GENEID")
+
+names(assays(sce)) <- "counts"
+```
+
+## set auto block size
+
+```{r setAutoBlockSize, echo = TRUE}
+library(DelayedArray)
+setAutoBlockSize(size=min(.Machine$integer.max, mem_gb*1e+9))
+```
+
+## Step quality control
+
+```{r quality_control, message=FALSE}
+library(BiocParallel)
+library(scater)
+
+bpp <- MulticoreParam(as.integer(3))
+
+sce <- unfiltered <- addPerCellQC(sce, BPPARAM=bpp, subsets=list(Mito=which(rowData(sce)$Chr=="MT")))
+qc <- quickPerCellQC(colData(sce), batch=sce$sample, sub.fields="subsets_Mito_percent")
+sce <- sce[,!qc$discard]
+
+## Normalization
+sce <- logNormCounts(sce, size_factors = sce$sum)
+sce_delay <- sce
+```
+
+## AutoBlockSize
+
+```{r AutoBlockSize, message=FALSE}
+library(scran)
+
+times_delayed_block_size <- lapply(67108864L * 2L^(0:5), function(i) {
+    gc()
+    setAutoBlockSize(i)
+    bpp <- SerialParam()
+    system.time({
+    	  id <- cl_start(paste0("AutoBlockSize_", i))
+        dec_delay <- modelGeneVarByPoisson(
+            sce_delay, block=sce_delay$sample, BPPARAM=bpp
+        )
+        cl_stop(id)
+    })
+})
+times_delayed_block_size
+```
+
+## CPU
+
+```{r CPU, message=FALSE}
+library(scran)
+setAutoBlockSize(.Machine$integer.max)
+
+times_delayed_cpu <- lapply(1:6 * 2L, function(i) {
+    message(i)
+    bpp <- MulticoreParam(i)
+    system.time({
+        id <- cl_start(paste0("cpu_", i))
+        dec_delay <- modelGeneVarByPoisson(
+            sce_delay, block=sce_delay$sample, BPPARAM=bpp
+        )
+        cl_stop(id)
+    })
+})
+times_delayed_cpu
+```
+
+## `R` session information
+
+```{r session_info, echo=FALSE}
+## Session info
+library("sessioninfo")
+options(width = 120)
+session_info()
+```

@@ -25,6 +25,7 @@ Suggests:
     devtools,
     cellxgenedp,
     zellkonverter,
+    Rcollectl,
     HDF5Array,
     SingleCellExperiment,
     EnsDb.Hsapiens.v86,
@@ -37,6 +38,5 @@ Suggests:
     bluster,
     celldex,
     SingleR,
-    knitcitations
-Remotes:
-    vjcitn/Rcollectl
+    knitcitations,
+    AnVIL
