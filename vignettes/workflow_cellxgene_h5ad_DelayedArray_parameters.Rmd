@@ -1,14 +1,14 @@
 ---
-title: "DelayedArray and modelGeneVarByPoisson"
+title: "Workflow running performance of DelayedArray with different parameters setup"
 output:
   html_document: default
 params:
   knitr_eval: FALSE
   fileId: "e2874fd9-af11-4adf-a47a-f380b7606434"
   sample: "Name"
-  mem_gb: 240
+  mem_gb: 120
 vignette: >
-  %\VignetteIndexEntry{DelayedArray and modelGeneVarByPoisson}
+  %\VignetteIndexEntry{Workflow running performance of DelayedArray with different parameters setup}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8} 
 ---
@@ -16,6 +16,8 @@ vignette: >
 ```{r setup}
 knitr::opts_chunk$set(echo = TRUE, eval = params$knitr_eval)
 ```
+
+This vignette explores when reading a H5AD file as a SingleCellExperiment object with assays loaded as DelayedArray, the impact of parameters (auto block size and number of cpus) set up to workflow running performance. Running time, memory usage and cpu usage are evaluated here, and workflow step variance modeling (function scran::modelGeneVarByPoisson) is taken as example.
 
 ## Set up parameters
 
@@ -40,9 +42,6 @@ fileId
 ## column selected for analysis
 sample
 
-## number of CPU cores detected
-parallel::detectCores()
-
 ## memory 
 sprintf("%d GB", params$mem_gb) 
 ```
@@ -65,7 +64,7 @@ h5ad_file <- files(db()) |>
 ## import h5ad file
 library(zellkonverter)
 library(HDF5Array)
-  sce <- readH5AD(h5ad_file, use_hdf5 = TRUE, reader = "R")
+sce <- readH5AD(h5ad_file, use_hdf5 = TRUE, reader = "R")
 
 ## pre-process data
 library(SingleCellExperiment)
@@ -103,6 +102,8 @@ sce_delay <- sce
 
 ## AutoBlockSize
 
+With different autoBlockSize set up and given memory and cpu, Rcollectl is used to record computing resources usage.
+
 ```{r AutoBlockSize, message=FALSE}
 library(scran)
 
@@ -122,6 +123,8 @@ times_delayed_block_size
 ```
 
 ## CPU
+
+With different number of cpus set up and given memory and autoBlockSize, Rcollectl is used to record computing resources usage.
 
 ```{r CPU, message=FALSE}
 library(scran)
