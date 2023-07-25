@@ -17,14 +17,17 @@ RUN wget "https://sourceforge.net/projects/collectl/files/latest/download" \
 	&& rm -rf collectl-* 
 
 # install Rcollectl with the vignette
-COPY install_Rcollectl.R /tmp/install_Rcollectl.R
-COPY run_Rcollectl.R /tmp/run_Rcollectl.R
+COPY install_dependencies.R /tmp/install_dependencies.R
+COPY install_package.R /tmp/install_package.R
+COPY run_vignette.R /tmp/run_vignette.R
 
-RUN chmod +x /tmp/install_Rcollectl.R
-RUN chmod +x /tmp/run_Rcollectl.R
+RUN chmod +x /tmp/install_dependencies.R
+RUN chmod +x /tmp/install_package.R
+RUN chmod +x /tmp/run_vignette.R
 
-RUN /tmp/install_Rcollectl.R
+RUN /tmp/install_dependencies.R
+RUN /tmp/install_package.R
 
 WORKDIR /output
 
-CMD /tmp/run_Rcollectl.R $knitr_eval $fileId $sample $dgCMatrix $core $mem_gb
+CMD /tmp/run_vignette.R $knitr_eval $fileId $sample $dgCMatrix $core $mem_gb

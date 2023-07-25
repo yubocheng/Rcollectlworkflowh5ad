@@ -6,10 +6,10 @@ ENV sample "Name"
 ENV mem_gb 120
 
 # install Rcollectl with the vignette
-COPY run_Rcollectl.R /tmp/run_Rcollectl.R
+COPY run_vignette.R /tmp/run_vignette.R
 
-RUN chmod +x /tmp/run_Rcollectl.R
+RUN chmod +x /tmp/run_vignette.R
 
 WORKDIR /output
 
-CMD /tmp/run_Rcollectl.R $knitr_eval $fileId $sample $mem_gb
+CMD /tmp/run_vignette.R $knitr_eval $fileId $sample $mem_gb

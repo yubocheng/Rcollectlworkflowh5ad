@@ -1,0 +1,131 @@
+---
+title: "Performance Summary"
+output:
+  html_document: default
+vignette: >
+  %\VignetteIndexEntry{Performance Summary}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8} 
+---
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
+```
+
+This vignette provides a performance summary of running workflow_cellxgene_h5ad.Rmd and workflow_cellxgene_h5ad_DelayedArray_parameters.Rmd. 
+
+## Time and resources spent in the workflow
+
+CPU usage, memory usage and running time are compared between DelayedArray vs dgcMatrix and medium vs large size file. 240 GB memory and 3 cpus were used. Medium: number of cells: 94256, large: number of cells: 168860
+
+CPU mean
+```{r, echo = FALSE, message=FALSE}
+read.csv("csv/CPU_mean.csv")
+```
+
+Memory max
+```{r, echo = FALSE, message=FALSE}
+read.csv("csv/MEM_mean.csv")
+```
+
+Time
+```{r, echo = FALSE, message=FALSE}
+read.csv("csv/Time.csv")
+```
+
+## Workflow running performance of DelayedArray with different parameters setup
+
+When reading a H5AD file as a SingleCellExperiment object with assays loaded as DelayedArray, the set up of auto block size and number of cpus impact workflow running performance. Running time, memory usage and cpu usage are evaluated here, and workflow step variance modeling (function scran::modelGeneVarByPoisson) is taken as example.
+
+```{r, echo = TRUE, message=FALSE, eval=FALSE}
+# autoBlockSize
+library(Rcollectl)
+times_delayed_block_size <- lapply(67108864L * 2L^(0:5), function(i) {
+    gc()
+    setAutoBlockSize(i)
+    bpp <- SerialParam()
+    system.time({
+    	id <- cl_start(paste0("AutoBlockSize_", i))
+        dec_delay <- modelGeneVarByPoisson(
+            sce_delay, block=sce_delay$sample, BPPARAM=bpp
+        )
+        cl_stop(id)
+    })
+})
+
+# cpu
+setAutoBlockSize(.Machine$integer.max)
+times_delayed <- lapply(1:5 * 2L, function(i) {
+    message(i)
+    bpp <- MulticoreParam(i)
+    system.time({
+        id <- cl_start(paste0("cpu_", i))
+        dec_delay <- modelGeneVarByPoisson(
+            sce_delay, block=sce_delay$sample, BPPARAM=bpp
+        )
+        cl_stop(id)
+    })
+})
+```
+
+### 240 GB memory 
+
+File id: e2874fd9-af11-4adf-a47a-f380b7606434, cell count: 19361
+
+autoBlockSize
+```{r, echo = FALSE, message=FALSE}
+read.csv("csv/e2874fd9-af11-4adf-a47a-f380b7606434_autoBlockSize.csv")
+```
+
+Number of cpus
+```{r, echo = FALSE, message=FALSE}
+read.csv("csv/e2874fd9-af11-4adf-a47a-f380b7606434_cpu.csv")
+```
+
+File id: 7125c914-29a6-476d-ad23-949d06c371ef, cell count: 94256
+
+autoBlockSize
+```{r, echo = FALSE, message=FALSE}
+read.csv("csv/7125c914-29a6-476d-ad23-949d06c371ef_autoBlockSize.csv")
+```
+
+Number of cpus
+```{r, echo = FALSE, message=FALSE}
+read.csv("csv/7125c914-29a6-476d-ad23-949d06c371ef_cpu.csv")
+```
+
+### 120 GB memory 
+
+File id: e2874fd9-af11-4adf-a47a-f380b7606434, cell count: 19361
+
+autoBlockSize
+```{r, echo = FALSE, message=FALSE}
+read.csv("csv/1bc21284-be3e-4520-9783-5a0824754b40_autoBlockSize.csv")
+```
+
+Number of cpus
+```{r, echo = FALSE, message=FALSE}
+read.csv("csv/1bc21284-be3e-4520-9783-5a0824754b40_cpu.csv")
+```
+
+File id: 7125c914-29a6-476d-ad23-949d06c371ef, cell count: 94256
+
+autoBlockSize
+```{r, echo = FALSE, message=FALSE}
+read.csv("csv/b9500db9-31c7-40c9-94a4-e9b2dd8e6070_autoBlockSize.csv")
+```
+
+Number of cpus
+```{r, echo = FALSE, message=FALSE}
+read.csv("csv/b9500db9-31c7-40c9-94a4-e9b2dd8e6070_cpu.csv")
+```
+
+
+## `R` session information
+
+```{r session_info, echo=FALSE}
+## Session info
+library("sessioninfo")
+options(width = 120)
+session_info()
+```

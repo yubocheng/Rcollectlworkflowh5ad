@@ -1,0 +1,8 @@
+step,DA_medium,DA_large,dgCMatrix_medium,dgCMatrix_large
+data prep,0:00:15,0:00:23,0:00:36,0:04:12
+quality control,0:01:02,0:03:24,0:00:51,0:02:58
+variance modeling,0:01:53,0:37:30,0:00:15,0:00:53
+data integration,0:02:16,0:11:31,0:01:05,0:02:59
+dimensionality reduction,0:01:12,0:02:35,0:01:14,0:02:40
+clustering,0:00:43,0:01:11,0:00:48,0:02:14
+differential expression,0:01:58,0:40:09,0:00:18,0:01:08

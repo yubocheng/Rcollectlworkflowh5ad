@@ -1,0 +1,8 @@
+step,DA_medium,DA_large,dgCMatrix_medium,dgCMatrix_large
+data prep,3.53,3.26,3.26,3.29
+quality control,5.02,6.21,4.04,4.06
+variance modeling,6.9,7.39,3.75,4.07
+data integration,5.42,3.86,8.67,6.11
+dimensionality reduction,9.25,23.38,9.69,21.31
+clustering,3.23,3.25,3.13,3.18
+differential expression,7.07,7.22,5.85,5.72
