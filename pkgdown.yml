@@ -1,0 +1,14 @@
+pandoc: 2.19.2
+pkgdown: 2.0.7
+pkgdown_sha: ~
+articles:
+  Introduction: Introduction.html
+  performance_summary: performance_summary.html
+  terra_data_import: terra_data_import.html
+  workflow_cellxgene_h5ad: workflow_cellxgene_h5ad.html
+  workflow_cellxgene_h5ad_DelayedArray_parameters: workflow_cellxgene_h5ad_DelayedArray_parameters.html
+last_built: 2023-07-31T20:43Z
+urls:
+  reference: https://yubocheng.github.io/Rcollectlworkflowh5ad/reference
+  article: https://yubocheng.github.io/Rcollectlworkflowh5ad/articles
+
