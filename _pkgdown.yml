@@ -1,0 +1,7 @@
+url: https://yubocheng.github.io/Rcollectlworkflowh5ad/
+navbar:
+  right:
+   - icon: fa-github
+     href: https://github.com/yubocheng/Rcollectlworkflowh5ad
+template:
+  bootstrap: 5
