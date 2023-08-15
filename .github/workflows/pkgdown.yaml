@@ -41,8 +41,7 @@ jobs:
       - id: 'auth'
         uses: 'google-github-actions/auth@v1'
         with:
-          workload_identity_provider: 'projects/terra-e6375052/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
-          service_account: 'my-service-account@my-project.iam.gserviceaccount.com'
+          credentials_json: '${{ secrets.TERRA_SECRET }}'
 
       - name: 'Set up Cloud SDK'
         uses: 'google-github-actions/setup-gcloud@v1'
