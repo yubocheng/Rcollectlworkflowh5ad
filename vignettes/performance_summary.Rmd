@@ -9,7 +9,7 @@ vignette: >
 ---
 
 ```{r, echo = FALSE}
-knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
+knitr::opts_chunk$set(echo = TRUE, eval = TRUE)
 ```
 
 This vignette provides a performance summary of running workflow_cellxgene_h5ad.Rmd and workflow_cellxgene_h5ad_DelayedArray_parameters.Rmd. 
