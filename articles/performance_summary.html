@@ -90,8 +90,32 @@ DelayedArray vs dgcMatrix and medium vs large size file. 240 GB memory
 and 3 cpus were used. Medium: number of cells: 94256, large: number of
 cells: 168860</p>
 <p>CPU mean</p>
+<pre><code><span><span class="co">##                       step DA_medium DA_large dgCMatrix_medium dgCMatrix_large</span></span>
+<span><span class="co">## 1                data prep      3.53     3.26             3.26            3.29</span></span>
+<span><span class="co">## 2          quality control      5.02     6.21             4.04            4.06</span></span>
+<span><span class="co">## 3        variance modeling      6.90     7.39             3.75            4.07</span></span>
+<span><span class="co">## 4         data integration      5.42     3.86             8.67            6.11</span></span>
+<span><span class="co">## 5 dimensionality reduction      9.25    23.38             9.69           21.31</span></span>
+<span><span class="co">## 6               clustering      3.23     3.25             3.13            3.18</span></span>
+<span><span class="co">## 7  differential expression      7.07     7.22             5.85            5.72</span></span></code></pre>
 <p>Memory max</p>
+<pre><code><span><span class="co">##                       step DA_medium DA_large dgCMatrix_medium dgCMatrix_large</span></span>
+<span><span class="co">## 1                data prep      9.16    13.42            12.29           55.03</span></span>
+<span><span class="co">## 2          quality control     13.88    24.51            13.74           60.69</span></span>
+<span><span class="co">## 3        variance modeling     25.06   166.59            14.81           65.36</span></span>
+<span><span class="co">## 4         data integration     15.20    63.14            15.22           67.90</span></span>
+<span><span class="co">## 5 dimensionality reduction     10.37    15.71            15.12           68.54</span></span>
+<span><span class="co">## 6               clustering     10.30    15.63            15.88           82.43</span></span>
+<span><span class="co">## 7  differential expression     24.15   179.35            18.42           85.89</span></span></code></pre>
 <p>Time</p>
+<pre><code><span><span class="co">##                       step DA_medium DA_large dgCMatrix_medium dgCMatrix_large</span></span>
+<span><span class="co">## 1                data prep   0:00:15  0:00:23          0:00:36         0:04:12</span></span>
+<span><span class="co">## 2          quality control   0:01:02  0:03:24          0:00:51         0:02:58</span></span>
+<span><span class="co">## 3        variance modeling   0:01:53  0:37:30          0:00:15         0:00:53</span></span>
+<span><span class="co">## 4         data integration   0:02:16  0:11:31          0:01:05         0:02:59</span></span>
+<span><span class="co">## 5 dimensionality reduction   0:01:12  0:02:35          0:01:14         0:02:40</span></span>
+<span><span class="co">## 6               clustering   0:00:43  0:01:11          0:00:48         0:02:14</span></span>
+<span><span class="co">## 7  differential expression   0:01:58  0:40:09          0:00:18         0:01:08</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="workflow-running-performance-of-delayedarray-with-different-parameters-setup">Workflow running performance of DelayedArray with different
@@ -102,7 +126,7 @@ loaded as DelayedArray, the set up of auto block size and number of cpus
 impact workflow running performance. Running time, memory usage and cpu
 usage are evaluated here, and workflow step variance modeling (function
 scran::modelGeneVarByPoisson) is taken as example.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># autoBlockSize</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/vjcitn/Rcollectl" class="external-link">Rcollectl</a></span><span class="op">)</span></span>
 <span><span class="va">times_delayed_block_size</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fl">67108864L</span> <span class="op">*</span> <span class="fl">2L</span><span class="op">^</span><span class="op">(</span><span class="fl">0</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span> <span class="op">{</span></span>
@@ -136,26 +160,136 @@ scran::modelGeneVarByPoisson) is taken as example.</p>
 </h3>
 <p>File id: e2874fd9-af11-4adf-a47a-f380b7606434, cell count: 19361</p>
 <p>autoBlockSize</p>
+<pre><code><span><span class="co">##   autoBlockSize elapsed MEM_max MEM_mean CPU_mean</span></span>
+<span><span class="co">## 1      67108864 0:13:31   11.64    10.89     3.21</span></span>
+<span><span class="co">## 2     134217728 0:07:16   11.41    10.73     3.24</span></span>
+<span><span class="co">## 3     268435456 0:03:32   11.41    10.84     3.21</span></span>
+<span><span class="co">## 4     536870912 0:01:58   11.31    10.72     3.25</span></span>
+<span><span class="co">## 5    1073741824 0:01:09   11.35    10.68     3.18</span></span>
+<span><span class="co">## 6    2147483648 0:00:46   11.16    10.46     3.23</span></span></code></pre>
 <p>Number of cpus</p>
+<pre><code><span><span class="co">##   ncpus elapsed MEM_max MEM_mean CPU_mean</span></span>
+<span><span class="co">## 1     2 0:00:36   14.59    12.02     4.08</span></span>
+<span><span class="co">## 2     4 0:00:18   20.65    16.36    10.36</span></span>
+<span><span class="co">## 3     6 0:00:19   26.51    20.31    14.95</span></span>
+<span><span class="co">## 4     8 0:00:21   32.43    24.33    20.18</span></span>
+<span><span class="co">## 5    10 0:00:19   38.25    28.06    24.00</span></span>
+<span><span class="co">## 6    12 0:00:20   43.09    31.23    29.09</span></span></code></pre>
 <p>File id: 7125c914-29a6-476d-ad23-949d06c371ef, cell count: 94256</p>
 <p>autoBlockSize</p>
+<pre><code><span><span class="co">##   autoBlockSize elapsed MEM_max MEM_mean CPU_mean</span></span>
+<span><span class="co">## 1      67108864 1:55:41   14.06    12.81     3.20</span></span>
+<span><span class="co">## 2     134217728 0:58:46   14.16    12.63     3.21</span></span>
+<span><span class="co">## 3     268435456 0:28:55   13.81    12.71     3.20</span></span>
+<span><span class="co">## 4     536870912 0:14:49   13.53    12.48     3.21</span></span>
+<span><span class="co">## 5    1073741824 0:07:32   13.72    12.68     3.21</span></span>
+<span><span class="co">## 6    2147483648 0:04:19   13.15    12.37     3.21</span></span></code></pre>
 <p>Number of cpus</p>
+<pre><code><span><span class="co">##   ncpus elapsed MEM_max MEM_mean CPU_mean</span></span>
+<span><span class="co">## 1     2 0:02:20   19.52    16.55     5.12</span></span>
+<span><span class="co">## 2     4 0:01:18   29.17    22.11    10.31</span></span>
+<span><span class="co">## 3     6 0:01:21   29.17    22.12    10.21</span></span>
+<span><span class="co">## 4     8 0:00:54   45.15    30.42    17.52</span></span>
+<span><span class="co">## 5    10 0:00:53   54.01    35.02    21.22</span></span>
+<span><span class="co">## 6    12 0:00:55   62.85    40.88    25.78</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="gb-memory-1">120 GB memory<a class="anchor" aria-label="anchor" href="#gb-memory-1"></a>
 </h3>
 <p>File id: e2874fd9-af11-4adf-a47a-f380b7606434, cell count: 19361</p>
 <p>autoBlockSize</p>
+<pre><code><span><span class="co">##   autoBlockSize elapsed MEM_max MEM_mean CPU_max CPU_mean</span></span>
+<span><span class="co">## 1      67108864 0:13:52   11.37    10.68      20     5.55</span></span>
+<span><span class="co">## 2     134217728 0:07:18   11.15    10.53      15     5.53</span></span>
+<span><span class="co">## 3     268435456 0:03:31   11.23    10.59      19     5.47</span></span>
+<span><span class="co">## 4     536870912 0:01:59   11.06    10.51      15     5.56</span></span>
+<span><span class="co">## 5    1073741824 0:01:10   11.09    10.42      14     5.75</span></span>
+<span><span class="co">## 6    2147483648 0:00:46   10.93    10.32      10     5.19</span></span></code></pre>
 <p>Number of cpus</p>
+<pre><code><span><span class="co">##   ncpus elapsed MEM_max MEM_mean CPU_max CPU_mean</span></span>
+<span><span class="co">## 1     2 0:00:36   14.49    11.83      15     7.22</span></span>
+<span><span class="co">## 2     4 0:00:19   20.42    16.16      20    19.55</span></span>
+<span><span class="co">## 3     6 0:00:21   25.24    19.63      35    28.05</span></span>
+<span><span class="co">## 4     8 0:00:23   32.22    23.83      45    37.04</span></span>
+<span><span class="co">## 5    10 0:00:23   37.13    27.08      60    47.04</span></span>
+<span><span class="co">## 6    12 0:00:26   42.21    28.63      60    50.81</span></span></code></pre>
 <p>File id: 7125c914-29a6-476d-ad23-949d06c371ef, cell count: 94256</p>
 <p>autoBlockSize</p>
+<pre><code><span><span class="co">##   autoBlockSize elapsed MEM_max MEM_mean CPU_max CPU_mean</span></span>
+<span><span class="co">## 1      67108864 1:55:11   13.82    12.55      20     5.45</span></span>
+<span><span class="co">## 2     134217728 0:58:14   13.88    12.36      18     5.46</span></span>
+<span><span class="co">## 3     268435456 0:28:39   13.49    12.43      20     5.45</span></span>
+<span><span class="co">## 4     536870912 0:14:33   13.17    12.22      17     5.46</span></span>
+<span><span class="co">## 5    1073741824 0:07:25   13.49    12.39      17     5.44</span></span>
+<span><span class="co">## 6    2147483648 0:04:13   12.92    12.08      15     5.50</span></span></code></pre>
 <p>Number of cpus</p>
+<pre><code><span><span class="co">##   ncpus elapsed MEM_max MEM_mean CPU_max CPU_mean</span></span>
+<span><span class="co">## 1     2 0:02:12   19.28    16.37      19    10.14</span></span>
+<span><span class="co">## 2     4 0:01:12   28.90    22.21      28    18.99</span></span>
+<span><span class="co">## 3     6 0:01:15   29.01    22.38      29    18.80</span></span>
+<span><span class="co">## 4     8 0:00:50   44.75    30.60      48    33.90</span></span>
+<span><span class="co">## 5    10 0:00:48   53.82    36.19      60    42.16</span></span>
+<span><span class="co">## 6    12 0:00:56   62.60    38.06      69    45.86</span></span></code></pre>
 </div>
 </div>
 <div class="section level2">
 <h2 id="r-session-information">
 <code>R</code> session information<a class="anchor" aria-label="anchor" href="#r-session-information"></a>
 </h2>
+<pre><code><span><span class="co">## <span style="color: #00BBBB; font-weight: bold;">─ Session info ───────────────────────────────────────────────────────────────────────────────────────────────────────</span></span></span>
+<span><span class="co">##  <span style="color: #555555; font-style: italic;">setting </span> <span style="color: #555555; font-style: italic;">value</span></span></span>
+<span><span class="co">##  version  R version 4.3.1 (2023-06-16)</span></span>
+<span><span class="co">##  os       Ubuntu 22.04.3 LTS</span></span>
+<span><span class="co">##  system   x86_64, linux-gnu</span></span>
+<span><span class="co">##  ui       X11</span></span>
+<span><span class="co">##  language en</span></span>
+<span><span class="co">##  collate  C.UTF-8</span></span>
+<span><span class="co">##  ctype    C.UTF-8</span></span>
+<span><span class="co">##  tz       UTC</span></span>
+<span><span class="co">##  date     2023-08-22</span></span>
+<span><span class="co">##  pandoc   2.19.2 @ /usr/bin/ (via rmarkdown)</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## <span style="color: #00BBBB; font-weight: bold;">─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────</span></span></span>
+<span><span class="co">##  <span style="color: #555555; font-style: italic;">package    </span> <span style="color: #555555; font-style: italic;">*</span> <span style="color: #555555; font-style: italic;">version</span> <span style="color: #555555; font-style: italic;">date (UTC)</span> <span style="color: #555555; font-style: italic;">lib</span> <span style="color: #555555; font-style: italic;">source</span></span></span>
+<span><span class="co">##  bslib         0.5.1   <span style="color: #555555;">2023-08-11</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">##  cachem        1.0.8   <span style="color: #555555;">2023-05-01</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">##  cli           3.6.1   <span style="color: #555555;">2023-03-23</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">##  desc          1.4.2   <span style="color: #555555;">2022-09-08</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">##  digest        0.6.33  <span style="color: #555555;">2023-07-07</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">##  evaluate      0.21    <span style="color: #555555;">2023-05-05</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">##  fastmap       1.1.1   <span style="color: #555555;">2023-02-24</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">##  fs            1.6.3   <span style="color: #555555;">2023-07-20</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">##  glue          1.6.2   <span style="color: #555555;">2022-02-24</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">##  htmltools     0.5.6   <span style="color: #555555;">2023-08-10</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">##  jquerylib     0.1.4   <span style="color: #555555;">2021-04-26</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">##  jsonlite      1.8.7   <span style="color: #555555;">2023-06-29</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">##  knitr         1.43    <span style="color: #555555;">2023-05-25</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">##  lifecycle     1.0.3   <span style="color: #555555;">2022-10-07</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">##  magrittr      2.0.3   <span style="color: #555555;">2022-03-30</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">##  memoise       2.0.1   <span style="color: #555555;">2021-11-26</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">##  pkgdown       2.0.7   <span style="color: #555555;">2022-12-14</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">##  purrr         1.0.2   <span style="color: #555555;">2023-08-10</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">##  R6            2.5.1   <span style="color: #555555;">2021-08-19</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">##  ragg          1.2.5   <span style="color: #555555;">2023-01-12</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">##  rlang         1.1.1   <span style="color: #555555;">2023-04-28</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">##  rmarkdown     2.24    <span style="color: #555555;">2023-08-14</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">##  rprojroot     2.0.3   <span style="color: #555555;">2022-04-02</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">##  sass          0.4.7   <span style="color: #555555;">2023-07-15</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">##  sessioninfo * 1.2.2   <span style="color: #555555;">2021-12-06</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">##  stringi       1.7.12  <span style="color: #555555;">2023-01-11</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">##  stringr       1.5.0   <span style="color: #555555;">2022-12-02</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">##  systemfonts   1.0.4   <span style="color: #555555;">2022-02-11</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">##  textshaping   0.3.6   <span style="color: #555555;">2021-10-13</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">##  vctrs         0.6.3   <span style="color: #555555;">2023-06-14</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">##  xfun          0.40    <span style="color: #555555;">2023-08-09</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">##  yaml          2.3.7   <span style="color: #555555;">2023-01-23</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## <span style="color: #555555;"> [1] /tmp/RtmpfkxeQ3/temp_libpath1a7c3bc1930a</span></span></span>
+<span><span class="co">## <span style="color: #555555;"> [2] /home/runner/work/_temp/Library</span></span></span>
+<span><span class="co">## <span style="color: #555555;"> [3] /opt/R/4.3.1/lib/R/site-library</span></span></span>
+<span><span class="co">## <span style="color: #555555;"> [4] /opt/R/4.3.1/lib/R/library</span></span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## <span style="color: #00BBBB; font-weight: bold;">──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</span></span></span></code></pre>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
