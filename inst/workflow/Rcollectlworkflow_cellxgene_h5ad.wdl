@@ -3,7 +3,7 @@ version 1.0
 task Rcollectl_cellxgene_h5ad {
     input {
         Boolean knitr_eval
-        String fileId
+        String file_url
         String sample
         Boolean dgCMatrix
         Int core = 3
@@ -11,7 +11,7 @@ task Rcollectl_cellxgene_h5ad {
     }
 
     command {
-        /tmp/run_Rcollectl.R ${knitr_eval} ${fileId} ${sample} ${dgCMatrix} ${core} ${mem_gb}
+        /tmp/run_Rcollectl.R ${knitr_eval} ${file_url} ${sample} ${dgCMatrix} ${core} ${mem_gb}
     }
 
     output {
@@ -34,7 +34,7 @@ workflow RcollectlWorkflow {
     
     input {
         Boolean knitr_eval
-        String fileId
+        String file_url
         String sample
         Boolean dgCMatrix
         Int core = 3
@@ -44,7 +44,7 @@ workflow RcollectlWorkflow {
     call Rcollectl_cellxgene_h5ad {
         input: 
         knitr_eval = knitr_eval, 
-        fileId = fileId, 
+        file_url = file_url, 
         sample = sample,
         dgCMatrix = dgCMatrix,
         core = core,

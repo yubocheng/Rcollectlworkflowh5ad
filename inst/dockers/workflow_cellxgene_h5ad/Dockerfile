@@ -1,7 +1,7 @@
 # Docker inheritance
 FROM bioconductor/bioconductor_docker:devel
 ENV knitr_eval FALSE
-ENV fileId "e2874fd9-af11-4adf-a47a-f380b7606434"
+ENV file_url "https://datasets.cellxgene.cziscience.com/0c6f2c74-8d27-4c1f-b63a-a766bc9f9490.h5ad"
 ENV sample "Name"
 ENV dgCMatrix TRUE
 ENV core 3
@@ -30,4 +30,4 @@ RUN /tmp/install_package.R
 
 WORKDIR /output
 
-CMD /tmp/run_vignette.R $knitr_eval $fileId $sample $dgCMatrix $core $mem_gb
+CMD /tmp/run_vignette.R $knitr_eval $file_url $sample $dgCMatrix $core $mem_gb

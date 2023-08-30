@@ -34,7 +34,7 @@ library(Rcollectlworkflowh5ad)
 
 manifest_tibble <- get_manifest_tibble() |>
   filter(
-  name == "Immunophenotyping of COVID-19 and influenza highlights the role of type I interferons in development of severe COVID-19",
+  title == "Immunophenotyping of COVID-19 and influenza highlights the role of type I interferons in development of severe COVID-19",
   filetype == "H5AD"
 )
 
@@ -48,7 +48,7 @@ To explore the h5ad file, import it to `R` as SingleCellExperiment object, then 
 ```{r, message=FALSE, warning=FALSE}
 library(cellxgenedp)
 library(dplyr)
-h5ad_file <- files(db()) |> filter(file_id == manifest_tibble$file_id) |> files_download(dry.run = FALSE)
+h5ad_file <- files(db()) |> filter(url == manifest_tibble$url) |> files_download(dry.run = FALSE)
 
 library(zellkonverter)
 library(HDF5Array)

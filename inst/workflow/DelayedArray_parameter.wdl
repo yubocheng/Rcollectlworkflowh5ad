@@ -3,13 +3,13 @@ version 1.0
 task Rcollectl_h5ad_DelayedArray_parameters {
     input {
         Boolean knitr_eval
-        String fileId
+        String file_url
         String sample
         Int mem_gb = 120
     }
 
     command {
-        /tmp/run_Rcollectl.R ${knitr_eval} ${fileId} ${sample} ${mem_gb}
+        /tmp/run_Rcollectl.R ${knitr_eval} ${file_url} ${sample} ${mem_gb}
     }
 
     output {
@@ -31,7 +31,7 @@ workflow RcollectlWorkflowDelayedArrayParameters {
     
     input {
         Boolean knitr_eval
-        String fileId
+        String file_url
         String sample
         Int mem_gb = 120
     }
@@ -39,7 +39,7 @@ workflow RcollectlWorkflowDelayedArrayParameters {
     call Rcollectl_h5ad_DelayedArray_parameters {
         input: 
         knitr_eval = knitr_eval, 
-        fileId = fileId, 
+        file_url = file_url, 
         sample = sample,
         mem_gb = mem_gb
     }

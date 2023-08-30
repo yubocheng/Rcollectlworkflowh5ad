@@ -1,6 +1,6 @@
 {
     "RcollectlWorkflowDelayedArrayParameters.knitr_eval": "TRUE",
-    "RcollectlWorkflowDelayedArrayParameters.fileId": "e2874fd9-af11-4adf-a47a-f380b7606434",
+    "RcollectlWorkflowDelayedArrayParameters.file_url": "https://datasets.cellxgene.cziscience.com/0c6f2c74-8d27-4c1f-b63a-a766bc9f9490.h5ad",
     "RcollectlWorkflowDelayedArrayParameters.sample": "Name",
     "RcollectlWorkflowDelayedArrayParameters.mem_gb": 120
 }

@@ -5,14 +5,14 @@
 #' @examples
 #' manifest_tibble <- get_manifest_tibble() |>
 #'   filter(
-#'   name == "Immunophenotyping of COVID-19 and influenza highlights the role of type I interferons in development of severe COVID-19",
+#'   title == "Immunophenotyping of COVID-19 and influenza highlights the role of type I interferons in development of severe COVID-19",
 #'   filetype == "H5AD"
 #' )
 #' @export
 get_manifest_tibble <- function() {
   manifest_tibble <- left_join(
-    datasets(db()) |> select(dataset_id, collection_id, name, donor_id, cell_count),
-    files(db()) |> select(dataset_id, file_id, filetype),
+    datasets(db()) |> select(dataset_id, collection_id, title, donor_id, cell_count),
+    files(db()) |> select(dataset_id, url, filetype),
     by = "dataset_id"
   ) 
 }
@@ -34,7 +34,7 @@ update_file_avtable <- function(manifest_tibble, id, sample, dgCMatrix, core, me
   manifest_tibble |> 
     mutate(
       file = id,
-      fileid = file_id,
+      file_url = url,
       knitr_eval = TRUE,
       sample = sample,
       dgCMatrix = dgCMatrix,
@@ -43,13 +43,13 @@ update_file_avtable <- function(manifest_tibble, id, sample, dgCMatrix, core, me
     ) |>
     select(
       file, 
-      fileid,
+      file_url,
       knitr_eval,
       sample,
       dgCMatrix,
       core,
       mem_gb,
-      dataset_name = name,
+      dataset_title = title,
       cell_count
     ) |>
     avtable_import("file")

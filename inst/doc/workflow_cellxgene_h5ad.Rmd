@@ -4,7 +4,7 @@ output:
   html_document: default
 params:
   knitr_eval: FALSE
-  fileId: "e2874fd9-af11-4adf-a47a-f380b7606434"
+  file_url: "https://datasets.cellxgene.cziscience.com/0c6f2c74-8d27-4c1f-b63a-a766bc9f9490.h5ad"
   sample: "Name"
   dgCMatrix: TRUE
   core: 3
@@ -29,17 +29,17 @@ File id of h5ad file to analyze could be obtained using package `cellxgenedp`, a
 library(cellxgenedp)
 library(dplyr)
 left_join(
-  datasets(db()) |> select(dataset_id, collection_id, donor_id, name, cell_count),
-  files(db()) |> select(dataset_id, file_id, filetype),
+  datasets(db()) |> select(dataset_id, collection_id, donor_id, title, cell_count),
+  files(db()) |> select(dataset_id, url, filetype),
   by = "dataset_id"
 ) |> filter(
-  name == "Direct Exposure to SARS-CoV-2 and Cigarette Smoke Increases Infection Severity and Alters the Stem Cell-Derived Airway Repair Response",
+  title == "Direct Exposure to SARS-CoV-2 and Cigarette Smoke Increases Infection Severity and Alters the Stem Cell-Derived Airway Repair Response",
   filetype == "H5AD"
 )
 ```
 
 ```{r, echo = TRUE, message=FALSE, eval=TRUE}
-fileId <- params$fileId
+file_url <- params$file_url
 ```
 
 Column to analyze needs to be specified from colData of the dataset.
@@ -63,8 +63,8 @@ mem_gb <- params$mem_gb
 ```
 
 ```{r, echo = TRUE, message=FALSE, eval=TRUE}
-## file id
-fileId
+## file url
+file_url
 
 ## column selected for analysis
 sample
@@ -93,7 +93,7 @@ library(dplyr)
 
 ## download h5ad file
 h5ad_file <- files(db()) |>
-  filter(file_id == params$fileId) |> files_download(dry.run = FALSE)
+  filter(url == file_url) |> files_download(dry.run = FALSE)
 
 ## start Rcollectl
 id <- cl_start(basename(h5ad_file))
