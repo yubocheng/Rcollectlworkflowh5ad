@@ -34,7 +34,7 @@ library(Rcollectlworkflowh5ad)
 
 manifest_tibble <- get_manifest_tibble() |>
   filter(
-  title == "Immunophenotyping of COVID-19 and influenza highlights the role of type I interferons in development of severe COVID-19",
+  title == "Direct Exposure to SARS-CoV-2 and Cigarette Smoke Increases Infection Severity and Alters the Stem Cell-Derived Airway Repair Response",
   filetype == "H5AD"
 )
 
@@ -62,7 +62,7 @@ names(colData(sce))
 Six variables: manifest_tibble, id, sample, dgCMatrix, core, mem_gb are needed to import file data to table "file". Id is unique id of file table. dgCMatrix is logical scalar to indicate whether assay should be loaded as dgCMatrix (TRUE, default value) or HDF5-based matrices from the HDF5Array package (FALSE), and value TRUE is suggested when h5ad file is larger than 500 MB. Core is number of CPU cores required for the workflow to run, and default value is 3. Mem_gb is memory required for the workflow, and default value is 60 GB.
 
 ```{r, message=FALSE, warning=FALSE}
-sample = "Disease.group"
+sample = "Name"
 avworkspace("bioconductor-rpci-yubo/Rcollectlworkflowh5ad")
 id = sprintf("%04d", dim(avtable("file"))[1] + 1)
 update_file_avtable(manifest_tibble, id, sample, "true", 3, 60)
@@ -71,7 +71,7 @@ avtable("file")
 
 ## Run workflow
 
-To run `Rcollectlworkflowh5ad`, click Rcollectlworkflowh5ad under WORKFLOWS tab, select file as "Step 1 Select root entity type:". For INPUTS, select attribute this.file_id for variable fileId, attribute this.knitr_eval for variable knitr_eval, attribute this.dgCMatrix for variable dgCMatrix, attribute this.sample for variable sample. When using attribute this.mem_gb and this.core or leave as blank for variables mem_gb and core, default values will be applied. For OUTPUTS, attributes could be filled in by "Use defaults". After saving the workflow, it could be run by selecting the h5ad file to analyze for "Step 2 SELECT DATA".
+To run `Rcollectlworkflowh5ad`, click Rcollectlworkflowh5ad under WORKFLOWS tab, select file as "Step 1 Select root entity type:". For INPUTS, select attribute this.file_url for variable file_url, attribute this.knitr_eval for variable knitr_eval, attribute this.dgCMatrix for variable dgCMatrix, attribute this.sample for variable sample. When using attribute this.mem_gb and this.core or leave as blank for variables mem_gb and core, default values will be applied. For OUTPUTS, attributes could be filled in by "Use defaults". After saving the workflow, it could be run by selecting the h5ad file to analyze for "Step 2 SELECT DATA".
 
 ## Pull workflow output
 

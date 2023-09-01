@@ -36,14 +36,14 @@ sample <- params$sample
 ```
 
 ```{r, echo = TRUE, message=FALSE, eval=TRUE}
-## file id
-fileId
+## file url
+file_url
 
 ## column selected for analysis
 sample
 
 ## memory 
-sprintf("%d GB", params$mem_gb) 
+sprintf("%d GB", mem_gb) 
 ```
 
 ## Download h5ad file
@@ -55,7 +55,7 @@ library(dplyr)
 
 ## download h5ad file
 h5ad_file <- files(db()) |>
-  filter(url== file_url) |> files_download(dry.run = FALSE)
+  filter(url == file_url) |> files_download(dry.run = FALSE)
 ```
 
 ## Step data preparation 

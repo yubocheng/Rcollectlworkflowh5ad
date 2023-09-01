@@ -79,7 +79,7 @@ dgCMatrix
 core
 
 ## memory 
-sprintf("%d GB", params$mem_gb) 
+sprintf("%d GB", mem_gb) 
 ```
 
 With parameters set up, workflow could be started. 
