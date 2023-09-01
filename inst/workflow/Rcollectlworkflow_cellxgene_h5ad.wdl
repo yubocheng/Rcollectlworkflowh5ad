@@ -11,7 +11,7 @@ task Rcollectl_cellxgene_h5ad {
     }
 
     command {
-        /tmp/run_Rcollectl.R ${knitr_eval} ${file_url} ${sample} ${dgCMatrix} ${core} ${mem_gb}
+        /tmp/run_vignette.R ${knitr_eval} ${file_url} ${sample} ${dgCMatrix} ${core} ${mem_gb}
     }
 
     output {

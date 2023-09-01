@@ -9,7 +9,7 @@ task Rcollectl_h5ad_DelayedArray_parameters {
     }
 
     command {
-        /tmp/run_Rcollectl.R ${knitr_eval} ${file_url} ${sample} ${mem_gb}
+        /tmp/run_vignette.R ${knitr_eval} ${file_url} ${sample} ${mem_gb}
     }
 
     output {
