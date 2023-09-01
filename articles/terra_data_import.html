@@ -192,10 +192,10 @@ the workflow, and default value is 60 GB.</p>
 <pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 1 × 5</span></span></span>
 <span><span class="co">##    page from_row to_row job_id                               status  </span></span>
 <span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">1</span>     1        1      1 f48a446d-04a7-4dfb-933d-9f4b75a90512 Uploaded</span></span></code></pre>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span>     1        1      1 f91d6299-bc93-422c-9acc-6b22ae4f646c Uploaded</span></span></code></pre>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/AnVIL/man/av.html" class="external-link">avtable</a></span><span class="op">(</span><span class="st">"file"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 12 × 9</span></span></span>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 13 × 9</span></span></span>
 <span><span class="co">##    file_id file_url       dataset_title knitr_eval mem_gb  core dgCMatrix sample</span></span>
 <span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 1</span> 0001    https://datas… Direct Expos… TRUE          120     3 TRUE      Name  </span></span>
@@ -210,6 +210,7 @@ the workflow, and default value is 60 GB.</p>
 <span><span class="co">## <span style="color: #BCBCBC;">10</span> 0010    https://datas… L4 IT - MTG:… TRUE          120     3 FALSE     Braak…</span></span>
 <span><span class="co">## <span style="color: #BCBCBC;">11</span> 0011    https://datas… L4 IT - MTG:… TRUE          240     3 TRUE      Braak…</span></span>
 <span><span class="co">## <span style="color: #BCBCBC;">12</span> 0012    https://datas… L4 IT - MTG:… TRUE          240     3 FALSE     Braak…</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">13</span> 0013    https://datas… Direct Expos… TRUE           60     3 TRUE      Name  </span></span>
 <span><span class="co">## <span style="color: #949494;"># ℹ 1 more variable: cell_count &lt;int&gt;</span></span></span></code></pre>
 </div>
 <div class="section level2">
@@ -235,33 +236,30 @@ analyze for “Step 2 SELECT DATA”.</p>
 <pre><code><span><span class="co">## [1] "bioconductor-rpci-yubo/Rcollectlworkflowh5ad"</span></span></code></pre>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/AnVIL/man/avworkflow.html" class="external-link">avworkflow_jobs</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 66 × 9</span></span></span>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 68 × 9</span></span></span>
 <span><span class="co">##    submissionId            submitter submissionDate      status succeeded failed</span></span>
 <span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dttm&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> 316c604d-4ce6-49fc-8b1… chengyub… 2023-07-21 <span style="color: #949494;">19:56:58</span> Done           1      0</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> 874043e7-a3f5-4a0b-b12… chengyub… 2023-07-21 <span style="color: #949494;">19:56:35</span> Done           1      0</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> 4c66be7f-2d8a-4e80-917… chengyub… 2023-07-21 <span style="color: #949494;">19:56:06</span> Done           1      0</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> 53b146eb-eccc-470f-bd3… chengyub… 2023-07-21 <span style="color: #949494;">19:46:48</span> Done           1      0</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> fed4ae3a-f2bb-4dcd-bfc… chengyub… 2023-07-13 <span style="color: #949494;">14:47:00</span> Done           1      0</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> 390d5094-4cdf-43f7-983… chengyub… 2023-07-13 <span style="color: #949494;">14:46:12</span> Done           1      0</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> 70955e9a-b79c-454a-81f… chengyub… 2023-07-12 <span style="color: #949494;">13:26:31</span> Done           1      0</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> 1dc08765-4821-42d5-b71… chengyub… 2023-07-11 <span style="color: #949494;">00:23:29</span> Done           1      0</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> 32c0fea4-9407-4bfe-b03… chengyub… 2023-07-06 <span style="color: #949494;">19:05:22</span> Done           1      0</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">10</span> c6393c3c-25b7-44d4-a25… chengyub… 2023-07-06 <span style="color: #949494;">17:29:15</span> Done           0      1</span></span>
-<span><span class="co">## <span style="color: #949494;"># ℹ 56 more rows</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> 17efa80e-3ef1-429d-835… chengyub… 2023-09-01 <span style="color: #949494;">18:50:02</span> Submi…         0      0</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> 4875b845-d754-4b07-b3b… chengyub… 2023-09-01 <span style="color: #949494;">18:29:54</span> Done           0      1</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> 316c604d-4ce6-49fc-8b1… chengyub… 2023-07-21 <span style="color: #949494;">19:56:58</span> Done           1      0</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> 874043e7-a3f5-4a0b-b12… chengyub… 2023-07-21 <span style="color: #949494;">19:56:35</span> Done           1      0</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> 4c66be7f-2d8a-4e80-917… chengyub… 2023-07-21 <span style="color: #949494;">19:56:06</span> Done           1      0</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> 53b146eb-eccc-470f-bd3… chengyub… 2023-07-21 <span style="color: #949494;">19:46:48</span> Done           1      0</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> fed4ae3a-f2bb-4dcd-bfc… chengyub… 2023-07-13 <span style="color: #949494;">14:47:00</span> Done           1      0</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> 390d5094-4cdf-43f7-983… chengyub… 2023-07-13 <span style="color: #949494;">14:46:12</span> Done           1      0</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> 70955e9a-b79c-454a-81f… chengyub… 2023-07-12 <span style="color: #949494;">13:26:31</span> Done           1      0</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span> 1dc08765-4821-42d5-b71… chengyub… 2023-07-11 <span style="color: #949494;">00:23:29</span> Done           1      0</span></span>
+<span><span class="co">## <span style="color: #949494;"># ℹ 58 more rows</span></span></span>
 <span><span class="co">## <span style="color: #949494;"># ℹ 3 more variables: submissionRoot &lt;chr&gt;, namespace &lt;chr&gt;, name &lt;chr&gt;</span></span></span></code></pre>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">fls</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/AnVIL/man/avworkflow.html" class="external-link">avworkflow_files</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">fls</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 6 × 10</span></span></span>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 3 × 10</span></span></span>
 <span><span class="co">##   file         workflow task  type  path  submissionId workflowId submissionRoot</span></span>
 <span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">1</span> 9b5b2aea-c5… Rcollec… <span style="color: #BB0000;">NA</span>    outp… gs:/… 316c604d-4c… e74ce331-… gs://fc-9bc34…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">2</span> 9b5b2aea-c5… Rcollec… <span style="color: #BB0000;">NA</span>    outp… gs:/… 316c604d-4c… e74ce331-… gs://fc-9bc34…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">3</span> workflow_ce… Rcollec… <span style="color: #BB0000;">NA</span>    outp… gs:/… 316c604d-4c… e74ce331-… gs://fc-9bc34…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">4</span> Rcollectl_c… Rcollec… Rcol… cont… gs:/… 316c604d-4c… e74ce331-… gs://fc-9bc34…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">5</span> stderr       Rcollec… Rcol… cont… gs:/… 316c604d-4c… e74ce331-… gs://fc-9bc34…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">6</span> stdout       Rcollec… Rcol… cont… gs:/… 316c604d-4c… e74ce331-… gs://fc-9bc34…</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span> Rcollectl_c… Rcollec… Rcol… cont… gs:/… 17efa80e-3e… 802b2e29-… gs://fc-9bc34…</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">2</span> stderr       Rcollec… Rcol… cont… gs:/… 17efa80e-3e… 802b2e29-… gs://fc-9bc34…</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">3</span> stdout       Rcollec… Rcol… cont… gs:/… 17efa80e-3e… 802b2e29-… gs://fc-9bc34…</span></span>
 <span><span class="co">## <span style="color: #949494;"># ℹ 2 more variables: namespace &lt;chr&gt;, name &lt;chr&gt;</span></span></span></code></pre>
 </div>
 <div class="section level2">
@@ -380,7 +378,7 @@ analyze for “Step 2 SELECT DATA”.</p>
 <span><span class="co">##  zellkonverter         * 1.10.1    <span style="color: #555555;">2023-05-23</span> <span style="color: #555555;">[2]</span> <span style="color: #555555;">Bioconductor</span></span></span>
 <span><span class="co">##  zlibbioc                1.46.0    <span style="color: #555555;">2023-04-25</span> <span style="color: #555555;">[2]</span> <span style="color: #555555;">Bioconductor</span></span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">## <span style="color: #555555;"> [1] /tmp/RtmpZzNsw9/temp_libpath88444691eb6f</span></span></span>
+<span><span class="co">## <span style="color: #555555;"> [1] /tmp/RtmpGWQYTU/temp_libpath197a31e744ff</span></span></span>
 <span><span class="co">## <span style="color: #555555;"> [2] /home/runner/work/_temp/Library</span></span></span>
 <span><span class="co">## <span style="color: #555555;"> [3] /opt/R/4.3.1/lib/R/site-library</span></span></span>
 <span><span class="co">## <span style="color: #555555;"> [4] /opt/R/4.3.1/lib/R/library</span></span></span>
