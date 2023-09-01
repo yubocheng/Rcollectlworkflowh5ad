@@ -97,22 +97,22 @@ workflow <code>Rcollectlworkflow</code> to table “file”.</p>
 <p>Filter need to be provided to identify h5ad file(s) for analysis,
 then manifests of the file(s) can be retrieved.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">cellxgenedp</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mtmorgan.github.io/cellxgenedp/" class="external-link">cellxgenedp</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">AnVIL</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">Rcollectlworkflowh5ad</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">manifest_tibble</span> <span class="op">&lt;-</span> <span class="fu">get_manifest_tibble</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span></span>
-<span>  <span class="va">name</span> <span class="op">==</span> <span class="st">"Immunophenotyping of COVID-19 and influenza highlights the role of type I interferons in development of severe COVID-19"</span>,</span>
+<span>  <span class="va">title</span> <span class="op">==</span> <span class="st">"Direct Exposure to SARS-CoV-2 and Cigarette Smoke Increases Infection Severity and Alters the Stem Cell-Derived Airway Repair Response"</span>,</span>
 <span>  <span class="va">filetype</span> <span class="op">==</span> <span class="st">"H5AD"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">manifest_tibble</span></span></code></pre></div>
 <pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 1 × 7</span></span></span>
-<span><span class="co">##   dataset_id            collection_id name  donor_id cell_count file_id filetype</span></span>
-<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">1</span> 2599d056-65a7-4e81-8… 4f889ffc-d4b… Immu… <span style="color: #949494;">&lt;list&gt;</span>        <span style="text-decoration: underline;">59</span>572 eef5cb… H5AD</span></span></code></pre>
+<span><span class="co">##   dataset_id              collection_id title donor_id cell_count url   filetype</span></span>
+<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span> 077b0429-0f47-48e0-879… cdfb9ead-cb5… Dire… <span style="color: #949494;">&lt;list&gt;</span>        <span style="text-decoration: underline;">19</span>361 http… H5AD</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="decide-sample-to-analyze">Decide sample to analyze<a class="anchor" aria-label="anchor" href="#decide-sample-to-analyze"></a>
@@ -121,59 +121,55 @@ then manifests of the file(s) can be retrieved.</p>
 SingleCellExperiment object, then sample to analyze should come from
 <code>names(colData(sce))</code>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">cellxgenedp</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://mtmorgan.github.io/cellxgenedp/" class="external-link">cellxgenedp</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
-<span><span class="va">h5ad_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/cellxgenedp/man/query.html" class="external-link">files</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/cellxgenedp/man/db.html" class="external-link">db</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">file_id</span> <span class="op">==</span> <span class="va">manifest_tibble</span><span class="op">$</span><span class="va">file_id</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/cellxgenedp/man/query.html" class="external-link">files_download</a></span><span class="op">(</span>dry.run <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">h5ad_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://mtmorgan.github.io/cellxgenedp/reference/query.html" class="external-link">files</a></span><span class="op">(</span><span class="fu"><a href="https://mtmorgan.github.io/cellxgenedp/reference/db.html" class="external-link">db</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">url</span> <span class="op">==</span> <span class="va">manifest_tibble</span><span class="op">$</span><span class="va">url</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://mtmorgan.github.io/cellxgenedp/reference/query.html" class="external-link">files_download</a></span><span class="op">(</span>dry.run <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/theislab/zellkonverter" class="external-link">zellkonverter</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://bioconductor.org/packages/HDF5Array" class="external-link">HDF5Array</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">SingleCellExperiment</span><span class="op">)</span></span>
 <span><span class="va">sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/zellkonverter/man/readH5AD.html" class="external-link">readH5AD</a></span><span class="op">(</span><span class="va">h5ad_file</span>, use_hdf5 <span class="op">=</span> <span class="cn">TRUE</span>, reader <span class="op">=</span> <span class="st">"R"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##  [1] "Sample.ID"                               </span></span>
-<span><span class="co">##  [2] "Disease.group"                           </span></span>
-<span><span class="co">##  [3] "Comorbidity"                             </span></span>
-<span><span class="co">##  [4] "Hospital.day"                            </span></span>
-<span><span class="co">##  [5] "WBC.per.microL"                          </span></span>
-<span><span class="co">##  [6] "Neutrophil.per.microL...."               </span></span>
-<span><span class="co">##  [7] "Lymphocyte.per.microL...."               </span></span>
-<span><span class="co">##  [8] "Monocyte.prt.microL...."                 </span></span>
-<span><span class="co">##  [9] "C.reactive.protein..mg.per.dL."          </span></span>
-<span><span class="co">## [10] "Chest.X.ray"                             </span></span>
-<span><span class="co">## [11] "Treatment"                               </span></span>
-<span><span class="co">## [12] "Respiratory.rate..BPM."                  </span></span>
-<span><span class="co">## [13] "O2.saturation"                           </span></span>
-<span><span class="co">## [14] "O2.supplement"                           </span></span>
-<span><span class="co">## [15] "Temperature"                             </span></span>
-<span><span class="co">## [16] "Systolic.BP"                             </span></span>
-<span><span class="co">## [17] "Heart.rate..BPM."                        </span></span>
-<span><span class="co">## [18] "Consciousness"                           </span></span>
-<span><span class="co">## [19] "NEWS.score"                              </span></span>
-<span><span class="co">## [20] "Severity"                                </span></span>
-<span><span class="co">## [21] "Celltype"                                </span></span>
-<span><span class="co">## [22] "Number.of.UMI"                           </span></span>
-<span><span class="co">## [23] "Number.of.Gene"                          </span></span>
-<span><span class="co">## [24] "Percentage.of.mitochondrial.gene"        </span></span>
-<span><span class="co">## [25] "Age"                                     </span></span>
-<span><span class="co">## [26] "tissue_ontology_term_id"                 </span></span>
-<span><span class="co">## [27] "assay_ontology_term_id"                  </span></span>
-<span><span class="co">## [28] "disease_ontology_term_id"                </span></span>
-<span><span class="co">## [29] "cell_type_ontology_term_id"              </span></span>
-<span><span class="co">## [30] "self_reported_ethnicity_ontology_term_id"</span></span>
-<span><span class="co">## [31] "development_stage_ontology_term_id"      </span></span>
-<span><span class="co">## [32] "sex_ontology_term_id"                    </span></span>
-<span><span class="co">## [33] "is_primary_data"                         </span></span>
-<span><span class="co">## [34] "organism_ontology_term_id"               </span></span>
-<span><span class="co">## [35] "donor_id"                                </span></span>
-<span><span class="co">## [36] "suspension_type"                         </span></span>
-<span><span class="co">## [37] "cell_type"                               </span></span>
-<span><span class="co">## [38] "assay"                                   </span></span>
-<span><span class="co">## [39] "disease"                                 </span></span>
-<span><span class="co">## [40] "organism"                                </span></span>
-<span><span class="co">## [41] "sex"                                     </span></span>
-<span><span class="co">## [42] "tissue"                                  </span></span>
-<span><span class="co">## [43] "self_reported_ethnicity"                 </span></span>
-<span><span class="co">## [44] "development_stage"</span></span></code></pre>
+<pre><code><span><span class="co">##  [1] "Genes"                                   </span></span>
+<span><span class="co">##  [2] "Run"                                     </span></span>
+<span><span class="co">##  [3] "X"                                       </span></span>
+<span><span class="co">##  [4] "Y"                                       </span></span>
+<span><span class="co">##  [5] "Virus"                                   </span></span>
+<span><span class="co">##  [6] "Name"                                    </span></span>
+<span><span class="co">##  [7] "Treatment"                               </span></span>
+<span><span class="co">##  [8] "Passch.Basal"                            </span></span>
+<span><span class="co">##  [9] "Passch.Interm..basal.secr."              </span></span>
+<span><span class="co">## [10] "Passch.Secretory"                        </span></span>
+<span><span class="co">## [11] "Passch.Ciliated"                         </span></span>
+<span><span class="co">## [12] "Passch.FOXN4"                            </span></span>
+<span><span class="co">## [13] "Passch.BrushPNEC"                        </span></span>
+<span><span class="co">## [14] "Passch.Ionocytes"                        </span></span>
+<span><span class="co">## [15] "Passch.SLC16A7"                          </span></span>
+<span><span class="co">## [16] "CellType"                                </span></span>
+<span><span class="co">## [17] "Basal2"                                  </span></span>
+<span><span class="co">## [18] "DividingCell"                            </span></span>
+<span><span class="co">## [19] "Name2"                                   </span></span>
+<span><span class="co">## [20] "Cluster"                                 </span></span>
+<span><span class="co">## [21] "Name3"                                   </span></span>
+<span><span class="co">## [22] "tissue_ontology_term_id"                 </span></span>
+<span><span class="co">## [23] "assay_ontology_term_id"                  </span></span>
+<span><span class="co">## [24] "disease_ontology_term_id"                </span></span>
+<span><span class="co">## [25] "development_stage_ontology_term_id"      </span></span>
+<span><span class="co">## [26] "cell_type_ontology_term_id"              </span></span>
+<span><span class="co">## [27] "self_reported_ethnicity_ontology_term_id"</span></span>
+<span><span class="co">## [28] "sex_ontology_term_id"                    </span></span>
+<span><span class="co">## [29] "is_primary_data"                         </span></span>
+<span><span class="co">## [30] "organism_ontology_term_id"               </span></span>
+<span><span class="co">## [31] "donor_id"                                </span></span>
+<span><span class="co">## [32] "suspension_type"                         </span></span>
+<span><span class="co">## [33] "cell_type"                               </span></span>
+<span><span class="co">## [34] "assay"                                   </span></span>
+<span><span class="co">## [35] "disease"                                 </span></span>
+<span><span class="co">## [36] "organism"                                </span></span>
+<span><span class="co">## [37] "sex"                                     </span></span>
+<span><span class="co">## [38] "tissue"                                  </span></span>
+<span><span class="co">## [39] "self_reported_ethnicity"                 </span></span>
+<span><span class="co">## [40] "development_stage"</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="import-manifest-file-date-to-table-file">Import manifest file date to table “file”<a class="anchor" aria-label="anchor" href="#import-manifest-file-date-to-table-file"></a>
@@ -187,7 +183,7 @@ file is larger than 500 MB. Core is number of CPU cores required for the
 workflow to run, and default value is 3. Mem_gb is memory required for
 the workflow, and default value is 60 GB.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">sample</span> <span class="op">=</span> <span class="st">"Disease.group"</span></span>
+<code class="sourceCode R"><span><span class="va">sample</span> <span class="op">=</span> <span class="st">"Name"</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/AnVIL/man/avworkspace.html" class="external-link">avworkspace</a></span><span class="op">(</span><span class="st">"bioconductor-rpci-yubo/Rcollectlworkflowh5ad"</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] "bioconductor-rpci-yubo/Rcollectlworkflowh5ad"</span></span></code></pre>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
@@ -196,36 +192,33 @@ the workflow, and default value is 60 GB.</p>
 <pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 1 × 5</span></span></span>
 <span><span class="co">##    page from_row to_row job_id                               status  </span></span>
 <span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">1</span>     1        1      1 3616aba7-207a-457a-82c5-b25cbf70ac79 Uploaded</span></span></code></pre>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span>     1        1      1 f48a446d-04a7-4dfb-933d-9f4b75a90512 Uploaded</span></span></code></pre>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/AnVIL/man/av.html" class="external-link">avtable</a></span><span class="op">(</span><span class="st">"file"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 72 × 16</span></span></span>
-<span><span class="co">##    file_id dataset_name    fileid workflow_cellxgene_h…¹ knitr_eval mem_gb  core</span></span>
-<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> 0001    Direct Exposur… e2874… gs://fc-9bc34f41-efc4… TRUE           30     2</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> 0002    Direct Exposur… e2874… gs://fc-9bc34f41-efc4… TRUE           30     2</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> 0003    Direct Exposur… e2874… gs://fc-9bc34f41-efc4… TRUE           30     3</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> 0004    Direct Exposur… e2874… gs://fc-9bc34f41-efc4… TRUE           30     3</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> 0005    Direct Exposur… e2874… gs://fc-9bc34f41-efc4… TRUE           30     4</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> 0006    Direct Exposur… e2874… gs://fc-9bc34f41-efc4… TRUE           30     4</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> 0007    Direct Exposur… e2874… gs://fc-9bc34f41-efc4… TRUE           30     5</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> 0008    Direct Exposur… e2874… gs://fc-9bc34f41-efc4… TRUE           30     5</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> 0009    Direct Exposur… e2874… gs://fc-9bc34f41-efc4… TRUE           60     3</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">10</span> 0010    Direct Exposur… e2874… gs://fc-9bc34f41-efc4… TRUE           60     3</span></span>
-<span><span class="co">## <span style="color: #949494;"># ℹ 62 more rows</span></span></span>
-<span><span class="co">## <span style="color: #949494;"># ℹ abbreviated name: ¹​workflow_cellxgene_h5ad_html</span></span></span>
-<span><span class="co">## <span style="color: #949494;"># ℹ 9 more variables: dgCMatrix &lt;lgl&gt;, sample &lt;chr&gt;, cell_count &lt;int&gt;,</span></span></span>
-<span><span class="co">## <span style="color: #949494;">#   modelGeneVarByPoisson_html &lt;chr&gt;, DelayedArray_parameters_html &lt;chr&gt;,</span></span></span>
-<span><span class="co">## <span style="color: #949494;">#   Rcollectl_timestamp.itemsType &lt;chr&gt;, Rcollectl_timestamp.items &lt;list&gt;,</span></span></span>
-<span><span class="co">## <span style="color: #949494;">#   Rcollectl_result.itemsType &lt;chr&gt;, Rcollectl_result.items &lt;list&gt;</span></span></span></code></pre>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 12 × 9</span></span></span>
+<span><span class="co">##    file_id file_url       dataset_title knitr_eval mem_gb  core dgCMatrix sample</span></span>
+<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> 0001    https://datas… Direct Expos… TRUE          120     3 TRUE      Name  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> 0002    https://datas… Direct Expos… TRUE          120     3 FALSE     Name  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> 0003    https://datas… Direct Expos… TRUE          240     3 TRUE      Name  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> 0004    https://datas… Direct Expos… TRUE          240     3 FALSE     Name  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> 0005    https://datas… Spleen        TRUE          120     3 TRUE      donor…</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> 0006    https://datas… Spleen        TRUE          120     3 FALSE     donor…</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> 0007    https://datas… Spleen        TRUE          240     3 TRUE      donor…</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> 0008    https://datas… Spleen        TRUE          240     3 FALSE     donor…</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> 0009    https://datas… L4 IT - MTG:… TRUE          120     3 TRUE      Braak…</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span> 0010    https://datas… L4 IT - MTG:… TRUE          120     3 FALSE     Braak…</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">11</span> 0011    https://datas… L4 IT - MTG:… TRUE          240     3 TRUE      Braak…</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">12</span> 0012    https://datas… L4 IT - MTG:… TRUE          240     3 FALSE     Braak…</span></span>
+<span><span class="co">## <span style="color: #949494;"># ℹ 1 more variable: cell_count &lt;int&gt;</span></span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="run-workflow">Run workflow<a class="anchor" aria-label="anchor" href="#run-workflow"></a>
 </h2>
 <p>To run <code>Rcollectlworkflowh5ad</code>, click
 Rcollectlworkflowh5ad under WORKFLOWS tab, select file as “Step 1 Select
-root entity type:”. For INPUTS, select attribute this.file_id for
-variable fileId, attribute this.knitr_eval for variable knitr_eval,
+root entity type:”. For INPUTS, select attribute this.file_url for
+variable file_url, attribute this.knitr_eval for variable knitr_eval,
 attribute this.dgCMatrix for variable dgCMatrix, attribute this.sample
 for variable sample. When using attribute this.mem_gb and this.core or
 leave as blank for variables mem_gb and core, default values will be
@@ -285,7 +278,7 @@ analyze for “Step 2 SELECT DATA”.</p>
 <span><span class="co">##  collate  C.UTF-8</span></span>
 <span><span class="co">##  ctype    C.UTF-8</span></span>
 <span><span class="co">##  tz       UTC</span></span>
-<span><span class="co">##  date     2023-08-22</span></span>
+<span><span class="co">##  date     2023-09-01</span></span>
 <span><span class="co">##  pandoc   2.19.2 @ /usr/bin/ (via rmarkdown)</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## <span style="color: #00BBBB; font-weight: bold;">─ Packages ───────────────────────────────────────────────────────────────────────────────────────────────────────────</span></span></span>
@@ -299,7 +292,7 @@ analyze for “Step 2 SELECT DATA”.</p>
 <span><span class="co">##  bitops                  1.0-7     <span style="color: #555555;">2021-04-24</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
 <span><span class="co">##  bslib                   0.5.1     <span style="color: #555555;">2023-08-11</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
 <span><span class="co">##  cachem                  1.0.8     <span style="color: #555555;">2023-05-01</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
-<span><span class="co">##  cellxgenedp           * 1.4.0     <span style="color: #555555;">2023-04-25</span> <span style="color: #555555;">[2]</span> <span style="color: #555555;">Bioconductor</span></span></span>
+<span><span class="co">##  cellxgenedp           * 1.4.1     <span style="color: #555555;">2023-08-25</span> <span style="color: #555555;">[2]</span> <span style="color: #555555;">Bioconductor</span></span></span>
 <span><span class="co">##  cli                     3.6.1     <span style="color: #555555;">2023-03-23</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
 <span><span class="co">##  crayon                  1.5.2     <span style="color: #555555;">2022-09-29</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
 <span><span class="co">##  curl                    5.0.2     <span style="color: #555555;">2023-08-14</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
@@ -308,7 +301,7 @@ analyze for “Step 2 SELECT DATA”.</p>
 <span><span class="co">##  digest                  0.6.33    <span style="color: #555555;">2023-07-07</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
 <span><span class="co">##  dir.expiry              1.8.0     <span style="color: #555555;">2023-04-25</span> <span style="color: #555555;">[2]</span> <span style="color: #555555;">Bioconductor</span></span></span>
 <span><span class="co">##  dplyr                 * 1.1.2     <span style="color: #555555;">2023-04-20</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
-<span><span class="co">##  DT                      0.28      <span style="color: #555555;">2023-05-18</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
+<span><span class="co">##  DT                      0.29      <span style="color: #555555;">2023-08-29</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
 <span><span class="co">##  ellipsis                0.3.2     <span style="color: #555555;">2021-04-29</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
 <span><span class="co">##  evaluate                0.21      <span style="color: #555555;">2023-05-05</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
 <span><span class="co">##  fansi                   1.0.4     <span style="color: #555555;">2023-01-22</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
@@ -319,8 +312,8 @@ analyze for “Step 2 SELECT DATA”.</p>
 <span><span class="co">##  futile.logger           1.4.3     <span style="color: #555555;">2016-07-10</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
 <span><span class="co">##  futile.options          1.0.1     <span style="color: #555555;">2018-04-20</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
 <span><span class="co">##  generics                0.1.3     <span style="color: #555555;">2022-07-05</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
-<span><span class="co">##  GenomeInfoDb          * 1.36.1    <span style="color: #555555;">2023-06-21</span> <span style="color: #555555;">[2]</span> <span style="color: #555555;">Bioconductor</span></span></span>
-<span><span class="co">##  GenomeInfoDbData        1.2.10    <span style="color: #555555;">2023-08-15</span> <span style="color: #555555;">[2]</span> <span style="color: #555555;">Bioconductor</span></span></span>
+<span><span class="co">##  GenomeInfoDb          * 1.36.2    <span style="color: #555555;">2023-08-25</span> <span style="color: #555555;">[2]</span> <span style="color: #555555;">Bioconductor</span></span></span>
+<span><span class="co">##  GenomeInfoDbData        1.2.10    <span style="color: #555555;">2023-09-01</span> <span style="color: #555555;">[2]</span> <span style="color: #555555;">Bioconductor</span></span></span>
 <span><span class="co">##  GenomicRanges         * 1.52.0    <span style="color: #555555;">2023-04-25</span> <span style="color: #555555;">[2]</span> <span style="color: #555555;">Bioconductor</span></span></span>
 <span><span class="co">##  glue                    1.6.2     <span style="color: #555555;">2022-02-24</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
 <span><span class="co">##  HDF5Array             * 1.28.1    <span style="color: #555555;">2023-05-01</span> <span style="color: #555555;">[2]</span> <span style="color: #555555;">Bioconductor</span></span></span>
@@ -352,7 +345,7 @@ analyze for “Step 2 SELECT DATA”.</p>
 <span><span class="co">##  R6                      2.5.1     <span style="color: #555555;">2021-08-19</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
 <span><span class="co">##  ragg                    1.2.5     <span style="color: #555555;">2023-01-12</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
 <span><span class="co">##  rapiclient              0.1.3     <span style="color: #555555;">2020-01-17</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
-<span><span class="co">##  Rcollectlworkflowh5ad * 0.1.0     <span style="color: #555555;">2023-08-22</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">local</span></span></span>
+<span><span class="co">##  Rcollectlworkflowh5ad * 0.1.0     <span style="color: #555555;">2023-09-01</span> <span style="color: #555555;">[1]</span> <span style="color: #BB00BB; font-weight: bold;">local</span></span></span>
 <span><span class="co">##  Rcpp                    1.0.11    <span style="color: #555555;">2023-07-06</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
 <span><span class="co">##  RCurl                   1.98-1.12 <span style="color: #555555;">2023-03-27</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
 <span><span class="co">##  reticulate              1.31      <span style="color: #555555;">2023-08-10</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
@@ -363,7 +356,7 @@ analyze for “Step 2 SELECT DATA”.</p>
 <span><span class="co">##  rlang                   1.1.1     <span style="color: #555555;">2023-04-28</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
 <span><span class="co">##  rmarkdown               2.24      <span style="color: #555555;">2023-08-14</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
 <span><span class="co">##  rprojroot               2.0.3     <span style="color: #555555;">2022-04-02</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
-<span><span class="co">##  S4Arrays              * 1.0.5     <span style="color: #555555;">2023-07-24</span> <span style="color: #555555;">[2]</span> <span style="color: #555555;">Bioconductor</span></span></span>
+<span><span class="co">##  S4Arrays              * 1.0.6     <span style="color: #555555;">2023-08-30</span> <span style="color: #555555;">[2]</span> <span style="color: #555555;">Bioconductor</span></span></span>
 <span><span class="co">##  S4Vectors             * 0.38.1    <span style="color: #555555;">2023-05-02</span> <span style="color: #555555;">[2]</span> <span style="color: #555555;">Bioconductor</span></span></span>
 <span><span class="co">##  sass                    0.4.7     <span style="color: #555555;">2023-07-15</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
 <span><span class="co">##  sessioninfo           * 1.2.2     <span style="color: #555555;">2021-12-06</span> <span style="color: #555555;">[2]</span> <span style="color: #BB00BB; font-weight: bold;">RSPM</span></span></span>
@@ -387,7 +380,7 @@ analyze for “Step 2 SELECT DATA”.</p>
 <span><span class="co">##  zellkonverter         * 1.10.1    <span style="color: #555555;">2023-05-23</span> <span style="color: #555555;">[2]</span> <span style="color: #555555;">Bioconductor</span></span></span>
 <span><span class="co">##  zlibbioc                1.46.0    <span style="color: #555555;">2023-04-25</span> <span style="color: #555555;">[2]</span> <span style="color: #555555;">Bioconductor</span></span></span>
 <span><span class="co">## </span></span>
-<span><span class="co">## <span style="color: #555555;"> [1] /tmp/RtmpAbPAiW/temp_libpath173e30d9de9c</span></span></span>
+<span><span class="co">## <span style="color: #555555;"> [1] /tmp/RtmpZzNsw9/temp_libpath88444691eb6f</span></span></span>
 <span><span class="co">## <span style="color: #555555;"> [2] /home/runner/work/_temp/Library</span></span></span>
 <span><span class="co">## <span style="color: #555555;"> [3] /opt/R/4.3.1/lib/R/site-library</span></span></span>
 <span><span class="co">## <span style="color: #555555;"> [4] /opt/R/4.3.1/lib/R/library</span></span></span>

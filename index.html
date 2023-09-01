@@ -68,19 +68,9 @@
   <main id="main" class="col-md-9"><div class="section level2">
 <h2 id="rcollectl-workflow">Rcollectl Workflow<a class="anchor" aria-label="anchor" href="#rcollectl-workflow"></a>
 </h2>
-<p>The vignette in this package follows single-cell analysis workflow (workflow chapters of the “Orchestrating Single-Cell Analysis with Bioconductor” book) to analyze h5ad file from cellxgene dataset and tracks computing resources usage with R package <code>Rcollectl</code>.</p>
-<p>Suggested computing resources: 60 GB memory, 3 CPU cores when parameter knitr_eval set to TRUE to knit the vignette. FileId is the file id of h5ad file to analyze. Sample should be one of column names.</p>
-<p>Build docker image with files in inst/docker:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>docker build <span class="sc">-</span>t bioconductor_docker_workflow_cellxgene_h5ad<span class="sc">:</span>devel .</span></code></pre></div>
-<p>Knit vignette with built docker image and generate output at LOCAL_DIRECTORY:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>docker run <span class="sc">-</span>it <span class="sc">-</span>v LOCAL_DIRECTORY<span class="sc">:</span><span class="er">/</span>output <span class="sc">--</span>rm \</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="sc">--</span>env knitr_eval<span class="ot">=</span><span class="cn">TRUE</span> \</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="sc">--</span>env fileId<span class="ot">=</span><span class="st">"e2874fd9-af11-4adf-a47a-f380b7606434"</span> \</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="sc">--</span>env sample<span class="ot">=</span><span class="st">"Name"</span> \</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="sc">--</span>env dgCMatrix<span class="ot">=</span><span class="cn">TRUE</span> \</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="sc">--</span>env core<span class="ot">=</span><span class="dv">3</span> \</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="sc">--</span>env mem_gb<span class="ot">=</span><span class="dv">60</span> \</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    bioconductor_docker_workflow_cellxgene_h5ad<span class="sc">:</span>devel</span></code></pre></div>
+<p>The vignettes in this package follows single-cell analysis workflow (workflow chapters of the “Orchestrating Single-Cell Analysis with Bioconductor” book) to analyze h5ad file from cellxgene dataset and tracks computing resources usage with R package <code>Rcollectl</code>.</p>
+<p>Two workflows Rcollectlworkflowh5ad and workflow_h5ad_DelayedArray_parameters are available at Dockstore, also set up on Terra workspace, bioconductor-rpci-yubo/Rcollectlworkflowh5ad.</p>
+<p>Vignette terra_data_import.Rmd includes R code for importing data of h5ad file(s) to Terra workspace to run the workflows. And performance_summary.Rmd provides a performance summary of running the two workflows, functions summary_result_dataset() and summary_result() generate the csv files needed for this vignette.</p>
 </div>
   </main><aside class="col-md-3"><div class="license">
 <h2 data-toc-skip>License</h2>
