@@ -1,8 +1,8 @@
-step,DA_medium,DA_large,dgCMatrix_medium,dgCMatrix_large
-data prep,0:00:15,0:00:23,0:00:36,0:04:12
-quality control,0:01:02,0:03:24,0:00:51,0:02:58
-variance modeling,0:01:53,0:37:30,0:00:15,0:00:53
-data integration,0:02:16,0:11:31,0:01:05,0:02:59
-dimensionality reduction,0:01:12,0:02:35,0:01:14,0:02:40
-clustering,0:00:43,0:01:11,0:00:48,0:02:14
-differential expression,0:01:58,0:40:09,0:00:18,0:01:08
+"","dgCMatrix_medium","DA_medium","dgCMatrix_large","DA_large"
+"data preparation","0:00:38","0:00:16","0:04:31","0:00:22"
+"quality control","0:00:56","0:01:05","0:03:01","0:03:28"
+"variance modeling","0:00:17","0:01:55","0:00:56","0:37:47"
+"data integration","0:01:04","0:02:19","0:03:07","0:11:37"
+"dimensionality reduction","0:01:17","0:01:12","0:02:57","0:02:38"
+"clustering","0:00:52","0:00:44","0:02:19","0:01:13"
+"differential expression","0:00:18","0:01:59","0:01:05","0:39:59"

@@ -5,10 +5,10 @@
 #' @examples
 #' inputTribble <- tribble(
 #'   ~name, ~submissionId,
-#'   "dgCMatrix_medium", "53b146eb-eccc-470f-bd3a-aee0e2be2bce",
-#'   "DA_medium", "4c66be7f-2d8a-4e80-917f-8872faf66377",
-#'   "dgCMatrix_large", "874043e7-a3f5-4a0b-b120-ded15a41a2ef",
-#'   "DA_large", "316c604d-4ce6-49fc-8b16-d6414136ea9d"
+#'   "dgCMatrix_medium", "17efa80e-3ef1-429d-8359-58c7cd653310",
+#'   "DA_medium", "2f0cc8ee-ae53-44e6-a6c0-31e7089f0d42",
+#'   "dgCMatrix_large", "c3c147eb-2ff8-4cf0-ba55-5708fa9c0ae5",
+#'   "DA_large", "8be18771-f06d-4256-ac13-6566a3053f14"
 #' )
 #' summary_result_dataset(inputTribble)
 #' @export
@@ -110,7 +110,7 @@ parse_Rcollectl_result_name <- function(submissionId) {
 #' @importFrom AnVIL Rcollectl dplyr
 #' @param submissionId submission ID of terra job
 #' @examples
-#' submissionId <- "1bc21284-be3e-4520-9783-5a0824754b40"
+#' submissionId <- "8ca42a70-d2e9-421f-9f51-f42601348a82"
 #' summary_result(submissionId)
 #' @export
 summary_result <- function(submissionId) {
