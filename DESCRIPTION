@@ -14,15 +14,11 @@ LazyData: true
 VignetteBuilder: knitr
 Depends:
     R (>= 4.2.0)
-Suggests:
-    knitr,
-    BiocStyle,
-    rmarkdown,
+Imports:
     ggplot2,
     dplyr,
+    tibble,
     pheatmap,
-    sessioninfo,
-    devtools,
     cellxgenedp,
     zellkonverter,
     Rcollectl,
@@ -37,6 +33,13 @@ Suggests:
     uwot,
     bluster,
     celldex,
-    SingleR,
     knitcitations,
     AnVIL
+Suggests: 
+    knitr,
+    BiocStyle,
+    rmarkdown,
+    sessioninfo,
+    SingleR,
+    devtools
+RoxygenNote: 7.2.3

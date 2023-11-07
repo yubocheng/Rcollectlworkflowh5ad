@@ -12,13 +12,19 @@ vignette: >
 knitr::opts_chunk$set(echo = TRUE, eval = TRUE)
 ```
 
-This vignette provides a performance summary of running workflow_cellxgene_h5ad.Rmd and workflow_cellxgene_h5ad_DelayedArray_parameters.Rmd. 
+This vignette provides a performance summary of running 
+workflow_cellxgene_h5ad.Rmd and 
+workflow_cellxgene_h5ad_DelayedArray_parameters.Rmd. 
 
 ## Time and resources spent in the workflow
 
-CPU usage, memory usage and running time are compared between DelayedArray vs dgcMatrix and medium vs large size file. 240 GB memory and 3 cpus were used. Medium: number of cells: 94256, large: number of cells: 168860
+CPU usage, memory usage and running time are compared between DelayedArray 
+vs dgcMatrix and medium vs large size file. 240 GB memory and 3 cpus were 
+used. Medium: number of cells: 94256, large: number of cells: 168860
 
-After running workflow Rcollectlworkflowh5ad in Terra workspace, submission ids could be used as input to generate three csv files CPU_mean.csv, MEM_mean.csv and Time.csv with the R code below. 
+After running workflow Rcollectlworkflowh5ad in Terra workspace, submission ids 
+could be used as input to generate three csv files CPU_mean.csv, MEM_mean.csv 
+and Time.csv with the R code below. 
 
 ```{r, message=FALSE, warning=FALSE}
 ## generate comparison csv files
@@ -37,26 +43,42 @@ inputTribble <- tribble(
 summary_result_dataset(inputTribble)
 ```
 
-Three csv files are generated in default R work directory, and need to be moved to folder csv in vignette directory.
+Three csv files are generated in default R work directory. Read the saved 
+version of this result in to *R*.
 
 CPU mean
-```{r, echo = FALSE, message=FALSE}
-read.csv("csv/CPU_mean.csv")
+```{r, message=FALSE}
+CPU_mean <- 
+  system.file(package = "Rcollectlworkflowh5ad", "extdata", "CPU_mean.csv")
+read.csv(CPU_mean)
 ```
 
 Memory max
-```{r, echo = FALSE, message=FALSE}
-read.csv("csv/MEM_mean.csv")
+```{r, message=FALSE}
+MEM_mean <- 
+  system.file(package = "Rcollectlworkflowh5ad", "extdata", "MEM_mean.csv")
+read.csv(MEM_mean)
 ```
 
 Time
-```{r, echo = FALSE, message=FALSE}
-read.csv("csv/Time.csv")
+```{r, message=FALSE}
+Time <- 
+  system.file(package = "Rcollectlworkflowh5ad", "extdata", "Time.csv")
+read.csv(Time)
 ```
+
+When reading a H5AD file as a SingleCellExperiment object with assays loaded 
+as DelayedArray, large data file requires high memory usage for step variance 
+modeling and differential expression, these two steps also takes much longer 
+time to complete. 
 
 ## Workflow running performance of DelayedArray with different parameters setup
 
-When reading a H5AD file as a SingleCellExperiment object with assays loaded as DelayedArray, the set up of auto block size and number of cpus impact workflow running performance. Running time, memory usage and cpu usage are evaluated here, and workflow step variance modeling (function scran::modelGeneVarByPoisson) is taken as example.
+When reading a H5AD file as a SingleCellExperiment object with assays loaded 
+as DelayedArray, the set up of auto block size and number of cpus impact 
+workflow running performance. Running time, memory usage and cpu usage are 
+evaluated here, and workflow step variance modeling (function 
+scran::modelGeneVarByPoisson) is taken as example.
 
 ```{r, echo = TRUE, message=FALSE, eval=FALSE}
 # autoBlockSize
@@ -89,7 +111,11 @@ times_delayed <- lapply(1:5 * 2L, function(i) {
 })
 ```
 
-After running workflow workflow_h5ad_DelayedArray_parameters in Terra workspace, submission ids could be used as input to generate six csv files ended with autoBlockSize.csv and six ended with cpu.csv, these could be combined to one file for different autoBlockSize and one for different cpus using the R code below. 
+After running workflow workflow_h5ad_DelayedArray_parameters in Terra 
+workspace, submission ids could be used as input to generate six csv files 
+ended with autoBlockSize.csv and six ended with cpu.csv, these could be 
+combined to one file for different autoBlockSize and one for different cpus 
+using the R code below. 
 
 ```{r, message=FALSE, warning=FALSE}
 ## generate csv files for different autoBlockSize and cpu
@@ -105,31 +131,57 @@ submissionId <- "35280de1-42d8-492b-aa8c-5feff984bffa"
 summary_result(submissionId)
 ```
 
-Two csv files are generated in default R work directory for every submission id, one ended with _autoBlockSize.csv, and the other _cpu.csv, then both need to be moved to folder csv in vignette directory.
+Two csv files are generated in default R work directory for every submission 
+id, one ended with _autoBlockSize.csv, and the other _cpu.csv. Read the saved 
+version of this result in to *R*.
 
-File url: https://datasets.cellxgene.cziscience.com/0c6f2c74-8d27-4c1f-b63a-a766bc9f9490.h5ad, cell count: 19361
+Results of file 
+url: https://datasets.cellxgene.cziscience.com/0c6f2c74-8d27-4c1f-b63a-a766bc9f9490.h5a
+, cell count: 19361
 
 autoBlockSize
-```{r, echo = FALSE, message=FALSE}
-read.csv("csv/8ca42a70-d2e9-421f-9f51-f42601348a82_autoBlockSize.csv")
+```{r, message=FALSE}
+autoBlockSize <- 
+  system.file(package = "Rcollectlworkflowh5ad", 
+              "extdata", 
+              "8ca42a70-d2e9-421f-9f51-f42601348a82_autoBlockSize.csv")
+read.csv(autoBlockSize)
 ```
 
 Number of cpus
-```{r, echo = FALSE, message=FALSE}
-read.csv("csv/8ca42a70-d2e9-421f-9f51-f42601348a82_cpu.csv")
+```{r, message=FALSE}
+cpu <- 
+  system.file(package = "Rcollectlworkflowh5ad", 
+              "extdata", 
+              "8ca42a70-d2e9-421f-9f51-f42601348a82_cpu.csv")
+read.csv(cpu)
 ```
 
-File url: https://datasets.cellxgene.cziscience.com/e0102be9-1756-46a9-aed1-4b2f03aade3c.h5ad, cell count: 94256
+Results of file 
+url: https://datasets.cellxgene.cziscience.com/e0102be9-1756-46a9-aed1-4b2f03aade3c.h5a
+, cell count: 94256
 
 autoBlockSize
-```{r, echo = FALSE, message=FALSE}
-read.csv("csv/35280de1-42d8-492b-aa8c-5feff984bffa_autoBlockSize.csv")
+```{r, message=FALSE}
+autoBlockSize <- 
+  system.file(package = "Rcollectlworkflowh5ad", 
+              "extdata", 
+              "35280de1-42d8-492b-aa8c-5feff984bffa_autoBlockSize.csv")
+read.csv(autoBlockSize)
 ```
 
 Number of cpus
-```{r, echo = FALSE, message=FALSE}
-read.csv("csv/35280de1-42d8-492b-aa8c-5feff984bffa_cpu.csv")
+```{r, message=FALSE}
+cpu <- 
+  system.file(package = "Rcollectlworkflowh5ad", 
+              "extdata", 
+              "35280de1-42d8-492b-aa8c-5feff984bffa_cpu.csv")
+read.csv(cpu)
 ```
+
+As autoBlockSize increases, running time reduces, memory and CPU usage stay 
+the same. With given memory, a couple of CPUs reduces running, but more CPUs 
+increase running time as well as memory and CPU usage.  
 
 ## `R` session information
 
