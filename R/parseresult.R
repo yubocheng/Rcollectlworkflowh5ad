@@ -12,7 +12,8 @@ NULL
 #' @importFrom utils read.delim write.csv
 #' @importFrom dplyr select arrange
 #' @param inputTribble submission IDs (and workflow IDs) of terra job and 
-#'   corresponding name 
+#'   corresponding name
+#' @param dir directory for generated csv files
 #' @examples
 #' library(AnVIL)
 #' library(Rcollectl)
@@ -30,26 +31,34 @@ NULL
 #' # inputTribble contains submission IDs and workflow IDs
 #' inputTribble <- tribble(
 #'   ~name, ~submissionId, ~workflowId,
-#'   "dgCMatrix_medium", "123895c9-6ad1-4258-b3d4-526e057c5cba", "923c360d-a30d-4013-b9f3-80058be1b34a",
-#'   "DA_medium", "123895c9-6ad1-4258-b3d4-526e057c5cba", "c7d5a05a-a275-411d-9908-3e344200cd4e",
-#'   "dgCMatrix_large", "9385fd75-4cb7-470f-9e07-1979e2c8f193", "31c69e74-12d4-40e7-b593-0f59006aca37",
-#'   "DA_large", "9385fd75-4cb7-470f-9e07-1979e2c8f193", "1410f324-021a-43f0-90bd-78fbb6a25c50"
+#'   "dgCMatrix_medium", "123895c9-6ad1-4258-b3d4-526e057c5cba", 
+#'     "923c360d-a30d-4013-b9f3-80058be1b34a",
+#'   "DA_medium", "123895c9-6ad1-4258-b3d4-526e057c5cba", 
+#'     "c7d5a05a-a275-411d-9908-3e344200cd4e",
+#'   "dgCMatrix_large", "9385fd75-4cb7-470f-9e07-1979e2c8f193", 
+#'     "31c69e74-12d4-40e7-b593-0f59006aca37",
+#'   "DA_large", "9385fd75-4cb7-470f-9e07-1979e2c8f193", 
+#'     "1410f324-021a-43f0-90bd-78fbb6a25c50"
 #' )
 #' 
 #' summary_result_dataset(inputTribble)
 #' @export
-summary_result_dataset <- function(inputTribble) {
+summary_result_dataset <- function(inputTribble, dir = tempdir()) {
   for (i in 1:dim(inputTribble)[1]) {
     if (dim(inputTribble)[2] == 2) {
       assign(paste0("data_", i), 
-             .parse_Rcollectl_result_name(as.character(inputTribble[i,2])))
+             .parse_Rcollectl_result_name(as.character(inputTribble[i,2]), 
+                                          NULL)
+             )
     } else if (dim(inputTribble)[2] == 3) {
       assign(paste0("data_", i), 
            .parse_Rcollectl_result_name(as.character(inputTribble[i,2]), 
-                                       as.character(inputTribble[i,3])))
+                                       as.character(inputTribble[i,3])
+                                       )
+           )
     }
   }
-  
+
   CPU_mean <- tibble(.rows = 7)
   for (i in 1:dim(inputTribble)[1]) {
     CPU_mean <- cbind(CPU_mean, 
@@ -57,7 +66,7 @@ summary_result_dataset <- function(inputTribble) {
   }
   colnames(CPU_mean) <- as.vector(inputTribble[,1])$name
   rownames(CPU_mean) <- as.vector(get(paste0("data_", i))[, "Step"])$Step
-  write.csv(CPU_mean, "CPU_mean.csv")
+  write.csv(CPU_mean, paste0(dir, "/CPU_mean.csv"))
 
   MEM_mean <- tibble(.rows = 7)
   for (i in 1:dim(inputTribble)[1]) {
@@ -66,7 +75,7 @@ summary_result_dataset <- function(inputTribble) {
   }
   colnames(MEM_mean) <- as.vector(inputTribble[,1])$name
   rownames(MEM_mean) <- as.vector(get(paste0("data_", i))[, "Step"])$Step
-  write.csv(MEM_mean, "MEM_mean.csv")
+  write.csv(MEM_mean, paste0(dir, "/MEM_mean.csv"))
 
   Time <- tibble(.rows = 7)
   for (i in 1:dim(inputTribble)[1]) {
@@ -75,12 +84,11 @@ summary_result_dataset <- function(inputTribble) {
   }
   colnames(Time) <- as.vector(inputTribble[,1])$name
   rownames(Time) <- as.vector(get(paste0("data_", i))[, "Step"])$Step
-  write.csv(Time, "Time.csv")
+  write.csv(Time, paste0(dir, "/Time.csv"))
 }
 
-
 # parse workflow result from Rcollectl
-.parse_Rcollectl_result_name <- function(submissionId, workflowId = NULL) {
+.parse_Rcollectl_result_name <- function(submissionId, workflowId) {
   stat <- tibble(Step = character(),
                  CPU_max = numeric(),
                  CPU_mean = numeric(),
@@ -89,10 +97,8 @@ summary_result_dataset <- function(inputTribble) {
                  Time = character())
 
   fls <- .get_files(submissionId, workflowId) 
-  tab_fls_Rcollectl <- paste0(submissionId, "/", 
-                              fls[endsWith(fls, ".tab.gz")])
-  tab_fls_timestamp <- paste0(submissionId, "/", 
-                              fls[endsWith(fls, ".timestamp.txt")])
+  tab_fls_Rcollectl <- fls[endsWith(fls, ".tab.gz")]
+  tab_fls_timestamp <- fls[endsWith(fls, ".timestamp.txt")]
   a <- cl_parse(tab_fls_Rcollectl)
   t <- read.delim(tab_fls_timestamp, 
                   header = FALSE, 
@@ -147,10 +153,13 @@ summary_result_dataset <- function(inputTribble) {
 }
 
 # get all files for submissionId (and workflowId)
-.get_files <- function(submissionId, workflowId = NULL) {
-  setwd("~")
-  avworkflow_localize(submissionId, type = "output", dry=FALSE)
-  fls = dir(submissionId, recursive = TRUE)
+.get_files <- function(submissionId, workflowId) {
+  path <- paste0(tempdir(), "/", submissionId)
+  avworkflow_localize(submissionId, 
+                      destination = path, 
+                      type = "output", 
+                      dry=FALSE)
+  fls = paste0(path, "/", dir(path, recursive = TRUE))
   if (!is.null(workflowId)) {
     fls <- fls[grepl(workflowId, fls, fixed=TRUE)]
     if (length(fls) == 0) {
@@ -171,9 +180,9 @@ summary_result_dataset <- function(inputTribble) {
 #' submissionId <- "8ca42a70-d2e9-421f-9f51-f42601348a82"
 #' summary_result(submissionId)
 #' @export
-summary_result <- function(submissionId, workflowId = NULL) {
+summary_result <- function(submissionId, workflowId = NULL, dir = tempdir()) {
   fls <- .get_files(submissionId, workflowId) 
-  tab_fls <- paste0(submissionId, "/", fls[endsWith(fls, ".tab.gz")])
+  tab_fls <- fls[endsWith(fls, ".tab.gz")]
   tab_fls_AutoBlockSize <- 
     tab_fls[startsWith(basename(tab_fls), "AutoBlockSize")]
   tab_fls_cpu <- 
@@ -194,7 +203,7 @@ summary_result <- function(submissionId, workflowId = NULL) {
     stat <- rbind(stat,tmp)
   }
   stat <- arrange(stat, as.numeric(autoBlockSize))
-  write.csv(stat, paste0(submissionId, "_autoBlockSize.csv"))
+  write.csv(stat, paste0(dir, "/", submissionId, "_autoBlockSize.csv"))
 
   stat <- tibble(ncpus = character(),
                  elapsed = character(),
@@ -211,7 +220,7 @@ summary_result <- function(submissionId, workflowId = NULL) {
     stat <- rbind(stat,tmp)
   }
   stat <- arrange(stat, as.numeric(ncpus))
-  write.csv(stat, paste0(submissionId, "_cpu.csv"))
+  write.csv(stat, paste0(dir, "/", submissionId, "_cpu.csv"))
 }
 
 # parse workflow result from Rcollectl

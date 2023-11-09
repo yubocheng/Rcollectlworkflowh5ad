@@ -5,13 +5,15 @@
 \alias{summary_result_dataset}
 \title{Parse workflow results}
 \usage{
-summary_result_dataset(inputTribble)
+summary_result_dataset(inputTribble, dir = tempdir())
 
-summary_result(submissionId, workflowId = NULL)
+summary_result(submissionId, workflowId = NULL, dir = tempdir())
 }
 \arguments{
 \item{inputTribble}{submission IDs (and workflow IDs) of terra job and 
 corresponding name}
+
+\item{dir}{directory for generated csv files}
 
 \item{submissionId}{character(1) submission ID of terra job}
 
@@ -42,10 +44,14 @@ inputTribble <- tribble(
 # inputTribble contains submission IDs and workflow IDs
 inputTribble <- tribble(
   ~name, ~submissionId, ~workflowId,
-  "dgCMatrix_medium", "123895c9-6ad1-4258-b3d4-526e057c5cba", "923c360d-a30d-4013-b9f3-80058be1b34a",
-  "DA_medium", "123895c9-6ad1-4258-b3d4-526e057c5cba", "c7d5a05a-a275-411d-9908-3e344200cd4e",
-  "dgCMatrix_large", "9385fd75-4cb7-470f-9e07-1979e2c8f193", "31c69e74-12d4-40e7-b593-0f59006aca37",
-  "DA_large", "9385fd75-4cb7-470f-9e07-1979e2c8f193", "1410f324-021a-43f0-90bd-78fbb6a25c50"
+  "dgCMatrix_medium", "123895c9-6ad1-4258-b3d4-526e057c5cba", 
+    "923c360d-a30d-4013-b9f3-80058be1b34a",
+  "DA_medium", "123895c9-6ad1-4258-b3d4-526e057c5cba", 
+    "c7d5a05a-a275-411d-9908-3e344200cd4e",
+  "dgCMatrix_large", "9385fd75-4cb7-470f-9e07-1979e2c8f193", 
+    "31c69e74-12d4-40e7-b593-0f59006aca37",
+  "DA_large", "9385fd75-4cb7-470f-9e07-1979e2c8f193", 
+    "1410f324-021a-43f0-90bd-78fbb6a25c50"
 )
 
 summary_result_dataset(inputTribble)

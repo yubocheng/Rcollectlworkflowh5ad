@@ -15,13 +15,21 @@ VignetteBuilder: knitr
 Depends:
     R (>= 4.2.0)
 Imports:
-    ggplot2,
     dplyr,
     tibble,
-    pheatmap,
     cellxgenedp,
-    zellkonverter,
     Rcollectl,
+    AnVIL
+Suggests: 
+    ggplot2,
+    knitr,
+    BiocStyle,
+    rmarkdown,
+    sessioninfo,
+    SingleR,
+    devtools,
+    pheatmap,
+    zellkonverter,
     HDF5Array,
     SingleCellExperiment,
     EnsDb.Hsapiens.v86,
@@ -33,13 +41,5 @@ Imports:
     uwot,
     bluster,
     celldex,
-    knitcitations,
-    AnVIL
-Suggests: 
-    knitr,
-    BiocStyle,
-    rmarkdown,
-    sessioninfo,
-    SingleR,
-    devtools
+    knitcitations
 RoxygenNote: 7.2.3

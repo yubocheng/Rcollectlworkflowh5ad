@@ -5,7 +5,7 @@ NULL
 
 #' @rdname update_data_table
 #' @description `get_manifest_tibble()` retrieve cellxgene data
-#' @importFrom cellxgenedp datasets db 
+#' @importFrom cellxgenedp datasets files db 
 #' @importFrom dplyr select mutate left_join
 #' @return `get_manifest_tibble()` returns a tibble
 #' @examples
@@ -20,9 +20,9 @@ NULL
 get_manifest_tibble <- function() {
   manifest_tibble <- left_join(
     datasets(db()) |> 
-      select(dataset_id, collection_id, title, donor_id, cell_count),
+      select("dataset_id", "collection_id", "title", "donor_id", "cell_count"),
     files(db()) |> 
-      select(dataset_id, url, filetype),
+      select("dataset_id", "url", "filetype"),
     by = "dataset_id"
   ) 
 }
@@ -67,14 +67,14 @@ update_file_avtable <-
     ) |>
     select(
       file, 
-      file_url,
-      knitr_eval,
+      "file_url",
+      "knitr_eval",
       sample,
       dgCMatrix,
       core,
       mem_gb,
-      dataset_title = title,
-      cell_count
+      dataset_title = "title",
+      "cell_count"
     ) |>
     avtable_import("file")
 }
