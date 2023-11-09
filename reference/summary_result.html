@@ -65,9 +65,9 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">summary_result_dataset</span><span class="op">(</span><span class="va">inputTribble</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">summary_result_dataset</span><span class="op">(</span><span class="va">inputTribble</span>, dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">summary_result</span><span class="op">(</span><span class="va">submissionId</span>, workflowId <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">summary_result</span><span class="op">(</span><span class="va">submissionId</span>, workflowId <span class="op">=</span> <span class="cn">NULL</span>, dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -75,6 +75,10 @@
     <dl><dt>inputTribble</dt>
 <dd><p>submission IDs (and workflow IDs) of terra job and 
 corresponding name</p></dd>
+
+
+<dt>dir</dt>
+<dd><p>directory for generated csv files</p></dd>
 
 
 <dt>submissionId</dt>
@@ -115,20 +119,24 @@ terra job if multiple workflows in one submission</p></dd>
 <span class="r-in"><span><span class="co"># inputTribble contains submission IDs and workflow IDs</span></span></span>
 <span class="r-in"><span><span class="va">inputTribble</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html" class="external-link">tribble</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>  <span class="op">~</span><span class="va">name</span>, <span class="op">~</span><span class="va">submissionId</span>, <span class="op">~</span><span class="va">workflowId</span>,</span></span>
-<span class="r-in"><span>  <span class="st">"dgCMatrix_medium"</span>, <span class="st">"123895c9-6ad1-4258-b3d4-526e057c5cba"</span>, <span class="st">"923c360d-a30d-4013-b9f3-80058be1b34a"</span>,</span></span>
-<span class="r-in"><span>  <span class="st">"DA_medium"</span>, <span class="st">"123895c9-6ad1-4258-b3d4-526e057c5cba"</span>, <span class="st">"c7d5a05a-a275-411d-9908-3e344200cd4e"</span>,</span></span>
-<span class="r-in"><span>  <span class="st">"dgCMatrix_large"</span>, <span class="st">"9385fd75-4cb7-470f-9e07-1979e2c8f193"</span>, <span class="st">"31c69e74-12d4-40e7-b593-0f59006aca37"</span>,</span></span>
-<span class="r-in"><span>  <span class="st">"DA_large"</span>, <span class="st">"9385fd75-4cb7-470f-9e07-1979e2c8f193"</span>, <span class="st">"1410f324-021a-43f0-90bd-78fbb6a25c50"</span></span></span>
+<span class="r-in"><span>  <span class="st">"dgCMatrix_medium"</span>, <span class="st">"123895c9-6ad1-4258-b3d4-526e057c5cba"</span>, </span></span>
+<span class="r-in"><span>    <span class="st">"923c360d-a30d-4013-b9f3-80058be1b34a"</span>,</span></span>
+<span class="r-in"><span>  <span class="st">"DA_medium"</span>, <span class="st">"123895c9-6ad1-4258-b3d4-526e057c5cba"</span>, </span></span>
+<span class="r-in"><span>    <span class="st">"c7d5a05a-a275-411d-9908-3e344200cd4e"</span>,</span></span>
+<span class="r-in"><span>  <span class="st">"dgCMatrix_large"</span>, <span class="st">"9385fd75-4cb7-470f-9e07-1979e2c8f193"</span>, </span></span>
+<span class="r-in"><span>    <span class="st">"31c69e74-12d4-40e7-b593-0f59006aca37"</span>,</span></span>
+<span class="r-in"><span>  <span class="st">"DA_large"</span>, <span class="st">"9385fd75-4cb7-470f-9e07-1979e2c8f193"</span>, </span></span>
+<span class="r-in"><span>    <span class="st">"1410f324-021a-43f0-90bd-78fbb6a25c50"</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">summary_result_dataset</span><span class="op">(</span><span class="va">inputTribble</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> localized 7 workflow files to './123895c9-6ad1-4258-b3d4-526e057c5cba'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> localized 0 workflow files to './123895c9-6ad1-4258-b3d4-526e057c5cba'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> localized 7 workflow files to './9385fd75-4cb7-470f-9e07-1979e2c8f193'</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> localized 0 workflow files to './9385fd75-4cb7-470f-9e07-1979e2c8f193'</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> localized 3 workflow files to '/tmp/RtmpWncWyL/123895c9-6ad1-4258-b3d4-526e057c5cba'</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> localized 0 workflow files to '/tmp/RtmpWncWyL/123895c9-6ad1-4258-b3d4-526e057c5cba'</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> localized 4 workflow files to '/tmp/RtmpWncWyL/9385fd75-4cb7-470f-9e07-1979e2c8f193'</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> localized 0 workflow files to '/tmp/RtmpWncWyL/9385fd75-4cb7-470f-9e07-1979e2c8f193'</span>
 <span class="r-in"><span><span class="va">submissionId</span> <span class="op">&lt;-</span> <span class="st">"8ca42a70-d2e9-421f-9f51-f42601348a82"</span></span></span>
 <span class="r-in"><span><span class="fu">summary_result</span><span class="op">(</span><span class="va">submissionId</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> localized 5 workflow files to './8ca42a70-d2e9-421f-9f51-f42601348a82'</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> localized 6 workflow files to '/tmp/RtmpWncWyL/8ca42a70-d2e9-421f-9f51-f42601348a82'</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
